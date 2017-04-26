@@ -15,5 +15,7 @@ public interface DishDao extends BaseDao<Dish> {
      * @throws UnsupportedOperationException
      */
     @Override
-    List<Dish> getAll();
+    default List<Dish> getAll() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -9,6 +9,11 @@ import java.util.List;
  */
 public interface UserDao extends BaseDao<User> {
 
-    List<User> getByEmail();
+    /**
+     *
+     * @param email
+     * @return null if not found
+     */
+    User getByEmail(String email);
 
 }
