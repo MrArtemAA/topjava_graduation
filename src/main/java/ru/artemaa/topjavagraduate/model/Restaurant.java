@@ -12,4 +12,7 @@ public class Restaurant extends NamedEntity {
         super(r.getId(), r.getName());
     }
 
+    public Restaurant(Integer id, String name) {
+        super(id, name);
+    }
 }
