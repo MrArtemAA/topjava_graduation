@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.artemaa.topjavagraduate.dao.BaseDao;
 import ru.artemaa.topjavagraduate.model.BaseEntity;
-import sun.rmi.runtime.Log;
 
 import java.util.Comparator;
 import java.util.List;
@@ -14,7 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * Created by Areshko-AA on 03.05.2017.
+ * MrArtemAA
+ * 03.05.2017
  */
 public abstract class InMemoryBaseDao<Entity extends BaseEntity> implements BaseDao<Entity> {
     protected static final Logger LOG = LoggerFactory.getLogger(InMemoryBaseDao.class);

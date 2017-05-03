@@ -6,7 +6,8 @@ import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 import java.util.List;
 
 /**
- * Created by Areshko-AA on 26.04.2017.
+ * MrArtemAA
+ * 26.04.2017
  */
 public interface BaseService<Entity extends BaseEntity> {
 

@@ -1,15 +1,16 @@
 package ru.artemaa.topjavagraduate.service;
 
-import ru.artemaa.topjavagraduate.dao.BaseDao;
+import org.springframework.stereotype.Service;
 import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.model.User;
+
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 
-import java.util.List;
-
 /**
- * Created by Areshko-AA on 26.04.2017.
+ * MrArtemAA
+ * 26.04.2017
  */
+@Service
 public class UserServiceImpl extends BaseServiceImpl<User, UserDao> implements UserService {
 
     public UserServiceImpl(UserDao dao) {

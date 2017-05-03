@@ -1,18 +1,24 @@
 package ru.artemaa.topjavagraduate.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.artemaa.topjavagraduate.dao.VoteDao;
 import ru.artemaa.topjavagraduate.model.Vote;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
-import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
+
 /**
- * Created by Areshko-AA on 26.04.2017.
+ * MrArtemAA
+ * 26.04.2017
  */
+@Service
 public class VoteServiceImpl implements VoteService {
-    
+
+    @Autowired
     private VoteDao dao;
 
     public VoteServiceImpl(VoteDao dao) {

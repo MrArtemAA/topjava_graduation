@@ -1,5 +1,6 @@
 package ru.artemaa.topjavagraduate.dao.mock;
 
+import org.springframework.stereotype.Repository;
 import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.model.User;
 
@@ -10,8 +11,10 @@ import static ru.artemaa.topjavagraduate.UserTestData.ADMIN;
 import static ru.artemaa.topjavagraduate.UserTestData.USER;
 
 /**
- * Created by Areshko-AA on 03.05.2017.
+ * MrArtemAA
+ * 03.05.2017
  */
+@Repository
 public class InMemoryUserDao extends InMemoryBaseDao<User> implements UserDao {
 
     public InMemoryUserDao() {

@@ -1,5 +1,6 @@
 package ru.artemaa.topjavagraduate.dao.mock;
 
+import org.springframework.stereotype.Repository;
 import ru.artemaa.topjavagraduate.dao.RestaurantDao;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 
@@ -9,8 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static ru.artemaa.topjavagraduate.RestaurantTestData.RESTAURANTS;
 
 /**
- * Created by Areshko-AA on 03.05.2017.
+ * MrArtemAA
+ * 03.05.2017
  */
+@Repository
 public class InMemoryRestaurantDao extends InMemoryBaseDao<Restaurant> implements RestaurantDao {
 
     public InMemoryRestaurantDao() {
