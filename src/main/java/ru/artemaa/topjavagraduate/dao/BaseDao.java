@@ -5,7 +5,8 @@ import ru.artemaa.topjavagraduate.model.BaseEntity;
 import java.util.List;
 
 /**
- * Created by Areshko-AA on 24.04.2017.
+ * @author MrArtemAA
+ * 24.04.2017
  */
 public interface BaseDao<Entity extends BaseEntity> {
 

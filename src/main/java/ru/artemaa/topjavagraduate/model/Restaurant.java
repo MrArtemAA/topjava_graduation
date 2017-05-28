@@ -1,9 +1,14 @@
 package ru.artemaa.topjavagraduate.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * MrArtemAA
  * 24.04.2017
  */
+@Entity
+@Table(name = "Restaurants")
 public class Restaurant extends NamedEntity {
 
     public Restaurant() {

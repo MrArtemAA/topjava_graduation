@@ -1,11 +1,19 @@
 package ru.artemaa.topjavagraduate.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
 /**
  * MrArtemAA
  * 24.04.2017
  */
+@MappedSuperclass
 public class NamedEntity extends BaseEntity {
 
+    @NotBlank
+    @Column(name = "name", nullable = false)
     protected String name;
 
     public NamedEntity() {

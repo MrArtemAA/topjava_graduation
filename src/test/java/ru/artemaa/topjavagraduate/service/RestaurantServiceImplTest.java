@@ -11,7 +11,8 @@ import java.util.Arrays;
 import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
 
 /**
- * Created by Areshko-AA on 03.05.2017.
+ * @author MrArtemAA
+ * 03.05.2017
  */
 public class RestaurantServiceImplTest extends AbstractServiceTest {
 
