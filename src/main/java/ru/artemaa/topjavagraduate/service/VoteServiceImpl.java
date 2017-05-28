@@ -1,7 +1,6 @@
 package ru.artemaa.topjavagraduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ru.artemaa.topjavagraduate.dao.VoteDao;
 import ru.artemaa.topjavagraduate.model.Vote;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
@@ -15,7 +14,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId
  * MrArtemAA
  * 26.04.2017
  */
-@Service
+//@Service
 public class VoteServiceImpl implements VoteService {
 
     @Autowired

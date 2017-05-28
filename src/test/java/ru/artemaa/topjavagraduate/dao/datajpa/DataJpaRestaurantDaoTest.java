@@ -12,10 +12,7 @@ import ru.artemaa.topjavagraduate.model.Restaurant;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
-import static ru.artemaa.topjavagraduate.RestaurantTestData.MATCHER;
-import static ru.artemaa.topjavagraduate.RestaurantTestData.REST1;
-import static ru.artemaa.topjavagraduate.RestaurantTestData.REST2;
+import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
 
 /**
  * @author MrArtemAA
@@ -23,7 +20,7 @@ import static ru.artemaa.topjavagraduate.RestaurantTestData.REST2;
  */
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
+        "classpath:spring/spring-db-test.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))

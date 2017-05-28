@@ -11,11 +11,11 @@ import java.util.List;
  * @author MrArtemAA
  *         18.05.2017
  */
-public abstract class DataJpaBaseDao<Entity extends BaseEntity> implements BaseDao<Entity> {
+public abstract class DataJpaBaseDao<Entity extends BaseEntity, CrudJpaRepository extends CrudBaseJpaRepository<Entity>> implements BaseDao<Entity> {
     protected static final Sort SORT_BY_NAME = new Sort("name");
 
     @Autowired
-    protected CrudBaseJpaRepository<Entity> crudJpaRepository;
+    protected CrudJpaRepository crudJpaRepository;
 
     public Entity save(Entity entity) {
         return crudJpaRepository.save(entity);

@@ -1,6 +1,5 @@
 package ru.artemaa.topjavagraduate.service;
 
-import org.springframework.stereotype.Service;
 import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.model.User;
 
@@ -10,7 +9,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
  * MrArtemAA
  * 26.04.2017
  */
-@Service
+//@Service
 public class UserServiceImpl extends BaseServiceImpl<User, UserDao> implements UserService {
 
     public UserServiceImpl(UserDao dao) {
