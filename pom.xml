@@ -22,6 +22,10 @@
         <spring.version>4.3.8.RELEASE</spring.version>
         <spring-data-jpa.version>1.11.1.RELEASE</spring-data-jpa.version>
 
+        <!-- Database -->
+        <postgresql.version>42.0.0</postgresql.version>
+        <tomcat.version>8.5.5</tomcat.version>
+
         <!-- Hibernate -->
         <hibernate.version>5.2.9.Final</hibernate.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
@@ -101,6 +105,19 @@
             <version>${spring-data-jpa.version}</version>
         </dependency>
 
+        <!-- Database -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -128,19 +145,6 @@
         </dependency>
 
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>hsql</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.hsqldb</groupId>
-                    <artifactId>hsqldb</artifactId>
-                    <version>2.4.0</version>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 
     <dependencyManagement>
         <dependencies>
