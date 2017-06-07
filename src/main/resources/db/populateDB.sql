@@ -15,3 +15,10 @@ INSERT INTO user_roles (role, user_id) VALUES
 INSERT INTO restaurants (name) VALUES
   ('Прага'),
   ('У Дяди Федора');
+
+INSERT INTO dishes (name, date, price, restaurant_id) VALUES
+  ('Fish', now(), 100, 100002),
+  ('Chips', now(), 50, 100002),
+  ('Water', now(), 10, 100002),
+  ('Soup', now(), 100, 100003),
+  ('Steak', now(), 250, 100004)

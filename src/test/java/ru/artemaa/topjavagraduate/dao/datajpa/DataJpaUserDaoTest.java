@@ -32,6 +32,8 @@ public class DataJpaUserDaoTest extends AbstractDataJpaDaoTest {
         MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, saved, USER), dao.getAll());
     }
 
+    //TODO update tests
+
     @Test
     public void testGet() throws Exception {
         MATCHER.assertEquals(USER, dao.get(USER_ID));

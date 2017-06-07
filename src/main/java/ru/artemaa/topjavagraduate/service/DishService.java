@@ -2,6 +2,7 @@ package ru.artemaa.topjavagraduate.service;
 
 import ru.artemaa.topjavagraduate.model.Dish;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface DishService extends BaseService<Dish> {
 
-    List<Dish> getAll(int restaurantId);
+    List<Dish> getAll(int restaurantId, LocalDate date);
 
     /**
      * @throws UnsupportedOperationException

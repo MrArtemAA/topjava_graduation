@@ -2,14 +2,16 @@ package ru.artemaa.topjavagraduate.dao;
 
 import ru.artemaa.topjavagraduate.model.Dish;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by Areshko-AA on 24.04.2017.
+ * MrArtemAA
+ * 24.04.2017
  */
 public interface DishDao extends BaseDao<Dish> {
 
-    List<Dish> getAll(int restaurantId);
+    List<Dish> getAll(int restaurantId, LocalDate date);
 
     /**
      * @throws UnsupportedOperationException

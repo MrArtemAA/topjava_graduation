@@ -1,15 +1,31 @@
 package ru.artemaa.topjavagraduate.model;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
  * MrArtemAA
  * 24.04.2017
  */
+@Entity
+@Table(name = "dishes", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "name", "date"}, name = "dishes_unique_rest_name_date_idx"))
 public class Dish extends NamedEntity {
 
-    private float price;
+    @Column(name = "price", nullable = false)
+    @NotNull
+    @Range(min = 1, max = 2000)
+    private Float price;
+
+    @Column(name = "date", nullable = false, columnDefinition = "datetime default now()")
+    @NotNull
     private LocalDate date = LocalDate.now();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @NotNull
     private Restaurant restaurant;
 
     public Dish() {

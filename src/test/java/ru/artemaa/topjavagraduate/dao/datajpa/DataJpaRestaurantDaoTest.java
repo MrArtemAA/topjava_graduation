@@ -28,6 +28,8 @@ public class DataJpaRestaurantDaoTest extends AbstractDataJpaDaoTest {
         MATCHER.assertCollectionEquals(Arrays.asList(saved, REST1, REST2), dao.getAll());
     }
 
+    //TODO update tests
+
     @Test
     public void testGet() throws Exception {
         Restaurant restaurant = dao.get(REST1_ID);
