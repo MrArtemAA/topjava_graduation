@@ -2,16 +2,18 @@ package ru.artemaa.topjavagraduate.dao.datajpa;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.artemaa.topjavagraduate.model.Restaurant;
+import ru.artemaa.topjavagraduate.model.User;
 
 /**
  * MrArtemAA
- * 29.05.2017
+ * 07.06.2017
  */
-public interface CrudRestaurantJpaRepository extends CrudBaseJpaRepository<Restaurant> {
+public interface CrudUserJpaRepository extends CrudBaseJpaRepository<User> {
+
+    User getByEmail(String email);
 
     @Override
-    @Query("DELETE FROM Restaurant r WHERE r.id=:id")
+    @Query("DELETE FROM User u WHERE u.id=:id")
     int delete(@Param("id") int id);
 
 }

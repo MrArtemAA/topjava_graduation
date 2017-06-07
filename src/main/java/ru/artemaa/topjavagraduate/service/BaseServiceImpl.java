@@ -1,6 +1,7 @@
 package ru.artemaa.topjavagraduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import ru.artemaa.topjavagraduate.dao.BaseDao;
 import ru.artemaa.topjavagraduate.model.BaseEntity;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
@@ -29,13 +30,13 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity, Dao extends Bas
 
     @Override
     public Entity save(Entity entity) {
-        // TODO Assert entity not null
+        Assert.notNull(entity, "entity can't be null");
         return dao.save(entity);
     }
 
     @Override
     public Entity update(Entity entity) throws NotFoundException {
-        // TODO Assert entity not null
+        Assert.notNull(entity, "entity can't be null");
         return checkNotFoundWithId(dao.save(entity), entity.getId());
     }
 
