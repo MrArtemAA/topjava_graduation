@@ -1,5 +1,7 @@
 package ru.artemaa.topjavagraduate.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -11,20 +13,22 @@ import java.time.LocalDate;
  * 24.04.2017
  */
 @Entity
-@Table(name = "dishes", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "name", "date"}, name = "dishes_unique_rest_name_date_idx"))
+@Table(name = "dishes", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "date", "name"},
+        name = "dishes_unique_rest_date_name_idx"))
 public class Dish extends NamedEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
     @Range(min = 1, max = 2000)
-    private Float price;
+    private Integer price;
 
     @Column(name = "date", nullable = false, columnDefinition = "datetime default now()")
     @NotNull
     private LocalDate date = LocalDate.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;
 
@@ -35,13 +39,13 @@ public class Dish extends NamedEntity {
         this(d.getId(), d.getName(), d.getRestaurant(), d.getDate(), d.getPrice());
     }
 
-    public Dish(Integer id, String name, Restaurant restaurant, float price) {
+    public Dish(Integer id, String name, Restaurant restaurant, Integer price) {
         super(id, name);
         this.restaurant = restaurant;
         this.price = price;
     }
 
-    public Dish(Integer id, String name, Restaurant restaurant, LocalDate date, float price) {
+    public Dish(Integer id, String name, Restaurant restaurant, LocalDate date, Integer price) {
         super(id, name);
         this.restaurant = restaurant;
         this.date = date;
@@ -56,11 +60,11 @@ public class Dish extends NamedEntity {
         this.restaurant = restaurant;
     }
 
-    public float getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

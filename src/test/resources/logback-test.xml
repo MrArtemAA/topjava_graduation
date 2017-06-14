@@ -18,6 +18,7 @@
     </appender>
 
     <logger name="ru.artemaa.topjavagraduate" level="debug"/>
+    <logger name="org.springframework.jdbc" level="debug"/>
 
     <root level="WARN">
         <appender-ref ref="file"/>

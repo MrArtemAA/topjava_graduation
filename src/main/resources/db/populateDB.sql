@@ -1,6 +1,7 @@
-DELETE FROM restaurants;
 DELETE FROM user_roles;
 DELETE FROM users;
+DELETE FROM dishes;
+DELETE FROM restaurants;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password) VALUES
@@ -21,4 +22,4 @@ INSERT INTO dishes (name, date, price, restaurant_id) VALUES
   ('Chips', now(), 50, 100002),
   ('Water', now(), 10, 100002),
   ('Soup', now(), 100, 100003),
-  ('Steak', now(), 250, 100004)
+  ('Steak', now(), 250, 100003);

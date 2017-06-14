@@ -26,5 +26,8 @@ public class RestaurantTestData {
     public static Restaurant getNew() {
         return new Restaurant(null, "Friends and Family");
     }
+    public static Restaurant getUpdated() {
+        return new Restaurant(REST1_ID, "НЕ Прага");
+    }
 
 }

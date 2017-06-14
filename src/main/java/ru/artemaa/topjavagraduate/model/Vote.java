@@ -1,37 +1,63 @@
 package ru.artemaa.topjavagraduate.model;
 
-import java.time.LocalDateTime;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 /**
  * MrArtemAA
  * 24.04.2017
  */
+@Entity
+@Table(name = "votes", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "user_id", "restaurant_id"},
+        name = "votes_unique_date_user_restaurant_idx"))
 public class Vote extends BaseEntity {
 
-    private LocalDateTime dateTime;
+    @Column(name = "date", nullable = false, columnDefinition = "datetime default now()")
+    @NotNull
+    private LocalDate date;
+
+    //@Column(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")//, nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private User user;
+
+    //@Column(name = "restaurant_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id")//, nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Restaurant restaurant;
 
     public Vote() {
     }
 
-    public Vote(Vote vote) {
-        this(vote.getId(), vote.getUser(), vote.getRestaurant(), vote.getDateTime());
+    public Vote(LocalDate date) {
+        this(null, null, null, date);
     }
 
-    public Vote(Integer id, User user, Restaurant restaurant, LocalDateTime dateTime) {
+    public Vote(Vote vote) {
+        this(vote.getId(), vote.getUser(), vote.getRestaurant(), vote.getDate());
+    }
+
+    public Vote(Integer id, User user, Restaurant restaurant, LocalDate date) {
         super(id);
         this.user = user;
         this.restaurant = restaurant;
-        this.dateTime = dateTime;
+        this.date = date;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public User getUser() {

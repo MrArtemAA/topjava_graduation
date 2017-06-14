@@ -1,6 +1,10 @@
 package ru.artemaa.topjavagraduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import ru.artemaa.topjavagraduate.dao.RestaurantDao;
+import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.dao.VoteDao;
 import ru.artemaa.topjavagraduate.model.Vote;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
@@ -8,54 +12,73 @@ import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
+import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 
 /**
  * MrArtemAA
  * 26.04.2017
  */
-//@Service
+@Service
 public class VoteServiceImpl implements VoteService {
 
     @Autowired
     private VoteDao dao;
 
-    public VoteServiceImpl(VoteDao dao) {
-        this.dao = dao;
-    }
+    @Autowired
+    private UserDao userDao;
 
-    @Override
+    @Autowired
+    private RestaurantDao restaurantDao;
+
+    /*@Override
+    public Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException {
+        return checkNotFound(dao.findByUserIdAndRestaurantIdAndDate(userId, restaurantId, date),
+                String.format("vote not found for userId = %s, restaurantId = %s, date = %s",
+                        userId,
+                        restaurantId,
+                        date.toString()));
+    }*/
+
+    /*@Override
     public Vote get(int id, int userId) throws NotFoundException {
+
         return checkNotFoundWithId(dao.get(id, userId), id);
+    }*/
+
+    @Override
+    public Vote save(int userId, int restaurantId) {
+        Vote vote = new Vote(LocalDate.now());
+        vote.setUser(userDao.getOne(userId));
+        vote.setRestaurant(restaurantDao.getOne(restaurantId));
+        return dao.save(vote);
     }
 
     @Override
-    public Vote save(Vote vote, int userId) {
-        // TODO Assert vote not null
-        return dao.save(vote, userId);
+    public Vote update(int userId, int restaurantId) throws NotFoundException {
+        Vote vote = getByUser(userId, LocalDate.now());
+        vote.setUser(userDao.getOne(userId));
+        vote.setRestaurant(restaurantDao.getOne(restaurantId));
+        return dao.save(vote);
     }
 
     @Override
-    public Vote update(Vote vote, int userId) throws NotFoundException {
-        // TODO Assert vote not null
-        return checkNotFoundWithId(dao.save(vote, userId), vote.getId());
+    public Vote getByUser(int userId, LocalDate date) throws NotFoundException {
+        Assert.notNull(date, "date can't be null");
+        return checkNotFound(dao.findByUserIdAndDate(userId, date),
+                String.format("vote not found for userId = %s on date = %s",
+                        userId,
+                        date.toString()));
     }
 
     @Override
     public List<Vote> getByUser(int userId) {
-        return dao.getByUser(userId);
-    }
-
-    @Override
-    public List<Vote> getByUser(int userId, LocalDate date) {
-        // TODO Assert date not null
-        return dao.getByUser(userId, date);
+        return dao.findByUserId(userId);
     }
 
     @Override
     public List<Vote> getByRestaurant(int restaurantId, LocalDate date) {
-        // TODO Assert date not null
-        return dao.getByRestaurant(restaurantId, date);
+        Assert.notNull(date, "date can't be null");
+        return dao.findByRestaurantIdAndDate(restaurantId, date);
     }
 
 }

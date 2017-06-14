@@ -1,23 +1,27 @@
 package ru.artemaa.topjavagraduate.service;
 
 import ru.artemaa.topjavagraduate.model.Dish;
+import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by Areshko-AA on 24.04.2017.
+ * @author Artem Areshko
+ * 24.04.2017
  */
-public interface DishService extends BaseService<Dish> {
+public interface DishService {
+
+    Dish get(int id, int restaurantId) throws NotFoundException;
+
+    //Dish getWithRestaurant(int id, int restaurantid) throws NotFoundException;
+
+    Dish save(Dish dish, int restaurantId);
+
+    Dish update(Dish dish, int restaurantId) throws NotFoundException;
+
+    void delete(int id) throws NotFoundException;
 
     List<Dish> getAll(int restaurantId, LocalDate date);
-
-    /**
-     * @throws UnsupportedOperationException
-     */
-    @Override
-    default List<Dish> getAll() {
-        throw new UnsupportedOperationException();
-    }
 
 }

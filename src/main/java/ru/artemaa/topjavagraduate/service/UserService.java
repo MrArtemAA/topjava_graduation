@@ -6,9 +6,20 @@ import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 import java.util.List;
 
 /**
- * Created by Areshko-AA on 24.04.2017.
+ * @author Artem Areshko
+ * 24.04.2017
  */
-public interface UserService extends BaseService<User> {
+public interface UserService {
+
+    User get(int id) throws NotFoundException;
+
+    User save(User entity);
+
+    User update(User entity) throws NotFoundException;
+
+    void delete(int id) throws NotFoundException;
+
+    List<User> getAll();
 
     User getByEmail(String email) throws NotFoundException;
 

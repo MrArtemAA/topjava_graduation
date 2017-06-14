@@ -1,28 +1,22 @@
 package ru.artemaa.topjavagraduate.service;
 
-import org.junit.Before;
 import org.junit.Test;
-import ru.artemaa.topjavagraduate.dao.mock.InMemoryUserDao;
-import ru.artemaa.topjavagraduate.model.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.artemaa.topjavagraduate.model.User;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
 import static ru.artemaa.topjavagraduate.UserTestData.*;
 
 /**
- * Created by Areshko-AA on 03.05.2017.
+ * @author Artem Areshko
+ * 03.05.2017
  */
 public class UserServiceImplTest extends AbstractServiceTest {
 
+    @Autowired
     private UserService service;
-
-    @Before
-    public void setUp() throws Exception {
-        service = new UserServiceImpl(new InMemoryUserDao());
-    }
 
     @Test
     public void get() throws Exception {
@@ -33,7 +27,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
     @Test
     public void getNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.get(10);
+        service.get(1);
     }
 
     @Test
@@ -50,7 +44,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void save() throws Exception {
-        User newUser = new User(null, "New User", "newuser@world.org", "newuser", Role.USER);
+        User newUser = getNew();
         User user = service.save(newUser);
         newUser.setId(user.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, newUser, USER), service.getAll());
@@ -58,8 +52,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void update() throws Exception {
-        User updated = new User(USER);
-        updated.setEmail("new@world.org");
+        User updated = getUpdated();
         service.update(updated);
         MATCHER.assertEquals(updated, service.get(USER_ID));
     }
@@ -73,7 +66,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
     @Test
     public void deleteNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.delete(10);
+        service.delete(1);
     }
 
     @Test

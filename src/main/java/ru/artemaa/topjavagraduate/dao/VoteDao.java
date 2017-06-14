@@ -1,29 +1,31 @@
 package ru.artemaa.topjavagraduate.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.artemaa.topjavagraduate.model.Vote;
 
 import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by Areshko-AA on 24.04.2017.
+ * @author MrArtemAA
+ * 24.04.2017
  */
-public interface VoteDao {
+@Repository
+@Transactional(readOnly = true)
+public interface VoteDao extends JpaRepository<Vote, Integer> {
 
-    Vote save(Vote vote, int userId);
+    @Override
+    @Transactional
+    Vote save(Vote vote);
 
-    /**
-     *
-     * @param id
-     * @param userId
-     * @return null if not found
-     */
-    Vote get(int id, int userId);
+    List<Vote> findByUserId(int userId);
 
-    List<Vote> getByUser(int userId);
+    List<Vote> findByRestaurantIdAndDate(int restaurantId, LocalDate date);
 
-    List<Vote> getByUser(int userId, LocalDate date);
+    Vote findByUserIdAndDate(int userId, LocalDate date);
 
-    List<Vote> getByRestaurant(int restaurantId, LocalDate date);
+    Vote findByUserIdAndRestaurantIdAndDate(int userId, int restaurantId, LocalDate date);
 
 }

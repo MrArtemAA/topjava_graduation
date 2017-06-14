@@ -1,9 +1,24 @@
 package ru.artemaa.topjavagraduate.service;
 
 import ru.artemaa.topjavagraduate.model.Restaurant;
+import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
+
+import java.util.List;
 
 /**
- * Created by Areshko-AA on 24.04.2017.
+ * @author MrArtemAA
+ * 24.04.2017
  */
-public interface RestaurantService extends BaseService<Restaurant> {
+public interface RestaurantService {
+
+    Restaurant get(int id) throws NotFoundException;
+
+    Restaurant save(Restaurant entity);
+
+    Restaurant update(Restaurant entity) throws NotFoundException;
+
+    void delete(int id) throws NotFoundException;
+
+    List<Restaurant> getAll();
+
 }

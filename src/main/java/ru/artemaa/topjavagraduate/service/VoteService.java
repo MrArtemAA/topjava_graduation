@@ -7,19 +7,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Created by Areshko-AA on 24.04.2017.
+ * @author Artem Areshko
+ * 24.04.2017
  */
 public interface VoteService {
 
-    Vote get(int id, int userId) throws NotFoundException;
+    //Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException;
 
-    Vote save(Vote vote, int userId);
+    Vote save(int userId, int restaurantId);
 
-    Vote update(Vote vote, int userId) throws NotFoundException;
+    Vote update(int userId, int restaurantId) throws NotFoundException;
+
+    Vote getByUser(int userId, LocalDate date) throws NotFoundException;
 
     List<Vote> getByUser(int userId);
-
-    List<Vote> getByUser(int userId, LocalDate date);
 
     List<Vote> getByRestaurant(int restaurantId, LocalDate date);
 

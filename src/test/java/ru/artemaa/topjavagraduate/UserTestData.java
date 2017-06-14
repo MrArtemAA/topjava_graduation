@@ -33,5 +33,8 @@ public class UserTestData {
     public static User getNew() {
         return new User(null, "New User", "newuser@world.org", "newuser", Role.USER);
     }
+    public static User getUpdated() {
+        return new User(START_SEQ, "Updated User", "user@world.org", "user", Role.USER);
+    }
 
 }
