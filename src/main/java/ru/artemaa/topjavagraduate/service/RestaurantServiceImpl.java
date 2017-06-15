@@ -18,8 +18,12 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
 
+    private final RestaurantDao dao;
+
     @Autowired
-    protected RestaurantDao dao;
+    public RestaurantServiceImpl(RestaurantDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public Restaurant get(int id) throws NotFoundException {

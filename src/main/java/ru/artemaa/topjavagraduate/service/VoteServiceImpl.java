@@ -21,14 +21,16 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 @Service
 public class VoteServiceImpl implements VoteService {
 
-    @Autowired
-    private VoteDao dao;
+    private final VoteDao dao;
+    private final UserDao userDao;
+    private final RestaurantDao restaurantDao;
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private RestaurantDao restaurantDao;
+    public VoteServiceImpl(VoteDao dao, UserDao userDao, RestaurantDao restaurantDao) {
+        this.dao = dao;
+        this.userDao = userDao;
+        this.restaurantDao = restaurantDao;
+    }
 
     /*@Override
     public Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException {

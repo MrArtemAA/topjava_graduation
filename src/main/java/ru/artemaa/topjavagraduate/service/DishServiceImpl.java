@@ -21,11 +21,14 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId
 @Service
 public class DishServiceImpl implements DishService {
 
-    @Autowired
-    private DishDao dao;
+    private final DishDao dao;
+    private final RestaurantDao restaurantDao;
 
     @Autowired
-    private RestaurantDao restaurantDao;
+    public DishServiceImpl(DishDao dao, RestaurantDao restaurantDao) {
+        this.dao = dao;
+        this.restaurantDao = restaurantDao;
+    }
 
     @Override
     public Dish get(int id, int restaurantId) throws NotFoundException {

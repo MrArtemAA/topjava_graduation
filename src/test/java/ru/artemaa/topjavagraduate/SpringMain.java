@@ -15,7 +15,7 @@ public class SpringMain {
     private static final Logger LOG = getLogger(SpringMain.class);
 
     public static void main(String[] args) {
-        try (ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
+        try (ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring/app.xml")) {
             LOG.info(Arrays.toString(applicationContext.getBeanDefinitionNames()));
             applicationContext.close();
         }

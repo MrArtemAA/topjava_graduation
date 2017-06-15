@@ -19,8 +19,12 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserDao dao;
+
     @Autowired
-    protected UserDao dao;
+    public UserServiceImpl(UserDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public User get(int id) throws NotFoundException {
