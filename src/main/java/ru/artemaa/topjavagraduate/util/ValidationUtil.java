@@ -4,7 +4,8 @@ import ru.artemaa.topjavagraduate.model.BaseEntity;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 /**
- * Created by Areshko-AA on 26.04.2017.
+ * @author Artem Areshko
+ * 26.04.2017
  */
 public class ValidationUtil {
 

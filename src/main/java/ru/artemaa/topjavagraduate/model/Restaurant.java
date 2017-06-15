@@ -11,6 +11,10 @@ import javax.persistence.Table;
 @Table(name = "Restaurants")
 public class Restaurant extends NamedEntity {
 
+    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OrderBy("name DESC")
+    private List<Dish> dishes;*/
+
     public Restaurant() {
     }
 
@@ -21,4 +25,9 @@ public class Restaurant extends NamedEntity {
     public Restaurant(Integer id, String name) {
         super(id, name);
     }
+
+    /*public List<Dish> getDishes() {
+        return dishes;
+    }*/
+
 }

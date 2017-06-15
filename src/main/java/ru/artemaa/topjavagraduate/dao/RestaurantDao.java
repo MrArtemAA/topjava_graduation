@@ -36,4 +36,8 @@ public interface RestaurantDao extends JpaRepository<Restaurant, Integer> {
         return findAll(SORT_BY_NAME);
     }
 
+    /*Restaurant getWithDishes(LocalDate date) {
+
+    }*/
+
 }

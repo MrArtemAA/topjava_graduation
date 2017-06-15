@@ -67,7 +67,7 @@ public class VoteServiceImpl implements VoteService {
     public Vote getByUser(int userId, LocalDate date) throws NotFoundException {
         Assert.notNull(date, "date can't be null");
         return checkNotFound(dao.findByUserIdAndDate(userId, date),
-                String.format("vote not found for userId = %s on date = %s",
+                String.format("userId = %s on date = %s",
                         userId,
                         date.toString()));
     }

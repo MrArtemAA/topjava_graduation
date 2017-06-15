@@ -13,9 +13,9 @@ public interface RestaurantService {
 
     Restaurant get(int id) throws NotFoundException;
 
-    Restaurant save(Restaurant entity);
+    Restaurant save(Restaurant restaurant);
 
-    Restaurant update(Restaurant entity) throws NotFoundException;
+    Restaurant update(Restaurant restaurant) throws NotFoundException;
 
     void delete(int id) throws NotFoundException;
 
