@@ -18,8 +18,8 @@ INSERT INTO restaurants (name) VALUES
   ('У Дяди Федора');
 
 INSERT INTO dishes (name, date, price, restaurant_id) VALUES
-  ('Fish', now(), 100, 100002),
-  ('Chips', now(), 50, 100002),
-  ('Water', now(), 10, 100002),
-  ('Soup', now(), 100, 100003),
-  ('Steak', now(), 250, 100003);
+  ('Fish', today(), 100, 100002),
+  ('Chips', today(), 50, 100002),
+  ('Water', today(), 10, 100002),
+  ('Soup', today(), 100, 100003),
+  ('Steak', today(), 250, 100003);

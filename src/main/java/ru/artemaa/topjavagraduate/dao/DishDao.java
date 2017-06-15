@@ -28,9 +28,11 @@ public interface DishDao extends JpaRepository<Dish, Integer> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Dish d WHERE d.id=:id")
-    int delete(@Param("id") int id);
+    @Query("DELETE FROM Dish d WHERE d.id=:id AND d.restaurant.id=:restaurantId")
+    int delete(@Param("id") int id, @Param("restaurantId") int restaurantId);
 
-    List<Dish> findByRestaurantIdAndDateOrderByName(int restaurantId, LocalDate date);
+    List<Dish> findAllByRestaurantIdAndDateOrderByName(int restaurantId, LocalDate date);
+
+    List<Dish> findAllByRestaurantIdOrderByName(int restaurantId);
 
 }

@@ -20,7 +20,7 @@ public interface DishService {
 
     Dish update(Dish dish, int restaurantId) throws NotFoundException;
 
-    void delete(int id) throws NotFoundException;
+    void delete(int id, int restaurantId) throws NotFoundException;
 
     List<Dish> getAll(int restaurantId, LocalDate date);
 

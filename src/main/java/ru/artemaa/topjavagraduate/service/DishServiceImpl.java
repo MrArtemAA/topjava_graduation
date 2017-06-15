@@ -50,13 +50,14 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(dao.delete(id) != 0, id);
+    public void delete(int id, int restaurantId) throws NotFoundException {
+        checkNotFoundWithId(dao.delete(id, restaurantId) != 0, id);
     }
 
     @Override
     public List<Dish> getAll(int restaurantId, LocalDate date) {
-        return dao.findByRestaurantIdAndDateOrderByName(restaurantId, date);
+        return dao.findAllByRestaurantIdAndDateOrderByName(restaurantId, date);
+        //return dao.findAllByRestaurantIdOrderByName(restaurantId);
     }
 
 }

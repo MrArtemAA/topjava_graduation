@@ -26,6 +26,11 @@ public class DishTestData {
     public static final Dish DISH1_REST2 = new Dish(DISH1_REST2_ID, "Soup", REST2, LocalDate.now(), 100);
     public static final Dish DISH2_REST2 = new Dish(DISH1_REST2_ID + 1, "Steak", REST2, LocalDate.now(), 250);
 
-
+    public static Dish getNew() {
+        return new Dish(null, "Juice", REST2, LocalDate.now(), 50);
+    }
+    public static Dish getUpdated() {
+        return new Dish(DISH1_REST1_ID + 2, "Still water", REST1, LocalDate.now(), 15);
+    }
 
 }

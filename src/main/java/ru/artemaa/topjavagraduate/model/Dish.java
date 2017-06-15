@@ -22,7 +22,7 @@ public class Dish extends NamedEntity {
     @Range(min = 1, max = 2000)
     private Integer price;
 
-    @Column(name = "date", nullable = false, columnDefinition = "datetime default now()")
+    @Column(name = "date", nullable = false, columnDefinition = "date default today()")
     @NotNull
     private LocalDate date = LocalDate.now();
 
