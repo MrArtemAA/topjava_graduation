@@ -1,14 +1,15 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import ru.artemaa.topjavagraduate.web.AbstractRestControllerTest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.artemaa.topjavagraduate.RestaurantTestData.REST1_ID;
+import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
 
 /**
  * @author Artem Areshko
@@ -24,6 +25,7 @@ public class RestaurantProfileRestControllerTest extends AbstractRestControllerT
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        //TODO matcher
     }
 
     @Test
@@ -32,6 +34,7 @@ public class RestaurantProfileRestControllerTest extends AbstractRestControllerT
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        //TODO matcher
     }
 
     @Test
@@ -41,7 +44,29 @@ public class RestaurantProfileRestControllerTest extends AbstractRestControllerT
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    /*@Test
-    public void testCreateForbidden()*/
+    @Test
+    public void testPostNotAllowed() throws Exception {
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(getNew())))
+                .andDo(print())
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    public void testPutNotAllowed() throws Exception {
+        mockMvc.perform(put(REST_URL + REST1_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(getUpdated())))
+                .andDo(print())
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    public void testDeleteNotAllowed() throws Exception {
+        mockMvc.perform(delete(REST_URL + REST1_ID))
+                .andDo(print())
+                .andExpect(status().isMethodNotAllowed());
+    }
 
 }
