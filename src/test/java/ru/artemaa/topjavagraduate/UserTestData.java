@@ -19,7 +19,7 @@ public class UserTestData {
     public static final User USER = new User(USER_ID, "User", "user@world.org", "user", Role.USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@world.org", "admin", Role.ADMIN, Role.USER);
 
-    public static final ModelMatcher<User> MATCHER = new ModelMatcher<>(
+    public static final ModelMatcher<User> MATCHER = ModelMatcher.of(User.class,
             (expected, actual) -> expected == actual ||
                     (Objects.equals(expected.getPassword(), actual.getPassword())
                             && Objects.equals(expected.getId(), actual.getId())

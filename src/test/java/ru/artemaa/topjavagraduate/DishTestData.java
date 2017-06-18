@@ -14,7 +14,7 @@ import static ru.artemaa.topjavagraduate.model.BaseEntity.START_SEQ;
  * 08.06.2017
  */
 public class DishTestData {
-    public static final ModelMatcher<Dish> MATCHER = new ModelMatcher<>();
+    public static final ModelMatcher<Dish> MATCHER = ModelMatcher.of(Dish.class);
 
     public static final int DISH1_REST1_ID = START_SEQ + 4;
     public static final int DISH1_REST2_ID = START_SEQ + 7;
