@@ -1,8 +1,10 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import ru.artemaa.topjavagraduate.service.RestaurantService;
+import ru.artemaa.topjavagraduate.util.JsonUtil;
 import ru.artemaa.topjavagraduate.web.AbstractRestControllerTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -19,13 +21,16 @@ public class RestaurantProfileRestControllerTest extends AbstractRestControllerT
 
     private static final String REST_URL = RestaurantProfileRestController.REST_URL + "/";
 
+    @Autowired
+    private RestaurantService service;
+
     @Test
     public void testGetAll() throws Exception {
         mockMvc.perform(get(REST_URL))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        //TODO matcher
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER.contentListMatcher(REST1, REST2));
     }
 
     @Test
@@ -33,8 +38,8 @@ public class RestaurantProfileRestControllerTest extends AbstractRestControllerT
         mockMvc.perform(get(REST_URL + REST1_ID))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        //TODO matcher
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER.contentMatcher(REST1));
     }
 
     @Test
@@ -48,7 +53,7 @@ public class RestaurantProfileRestControllerTest extends AbstractRestControllerT
     public void testPostNotAllowed() throws Exception {
         mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(getNew())))
+                .content(JsonUtil.writeValue(getNew())))
                 .andDo(print())
                 .andExpect(status().isMethodNotAllowed());
     }
@@ -57,7 +62,7 @@ public class RestaurantProfileRestControllerTest extends AbstractRestControllerT
     public void testPutNotAllowed() throws Exception {
         mockMvc.perform(put(REST_URL + REST1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(getUpdated())))
+                .content(JsonUtil.writeValue(getUpdated())))
                 .andDo(print())
                 .andExpect(status().isMethodNotAllowed());
     }

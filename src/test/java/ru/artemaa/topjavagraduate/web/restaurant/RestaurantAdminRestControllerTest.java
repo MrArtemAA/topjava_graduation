@@ -1,14 +1,15 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.service.RestaurantService;
+import ru.artemaa.topjavagraduate.util.JsonUtil;
 import ru.artemaa.topjavagraduate.web.AbstractRestControllerTest;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -33,8 +34,8 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
         mockMvc.perform(get(REST_URL))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        //TODO matcher
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER.contentListMatcher(REST1, REST2));
     }
 
     @Test
@@ -42,8 +43,8 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
         mockMvc.perform(get(REST_URL + REST1_ID))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        //TODO matcher
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER.contentMatcher(REST1));
     }
 
     @Test
@@ -58,12 +59,15 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
         Restaurant expected = getNew();
         ResultActions actions = mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(expected)))
+                .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
                 .andExpect(status().isCreated());
 
-        //TODO matcher + assert equals
-        //MATCHER.assertCollectionEquals(Arrays.asList(expected, REST1, REST2), service.getAll());
+        Restaurant saved = MATCHER.fromJsonAction(actions);
+        expected.setId(saved.getId());
+
+        MATCHER.assertEquals(expected, saved);
+        MATCHER.assertCollectionEquals(Arrays.asList(expected, REST1, REST2), service.getAll());
     }
 
     @Test
@@ -71,7 +75,7 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
         Restaurant expected = getUpdated();
         ResultActions actions = mockMvc.perform(put(REST_URL + REST1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(expected)))
+                .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
                 .andExpect(status().isOk());
 
