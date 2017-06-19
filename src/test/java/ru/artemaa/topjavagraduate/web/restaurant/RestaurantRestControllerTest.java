@@ -17,9 +17,9 @@ import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
  * @author Artem Areshko
  *         15.06.2017
  */
-public class RestaurantProfileRestControllerTest extends AbstractRestControllerTest {
+public class RestaurantRestControllerTest extends AbstractRestControllerTest {
 
-    private static final String REST_URL = RestaurantProfileRestController.REST_URL + "/";
+    private static final String REST_URL = RestaurantRestController.REST_URL + "/";
 
     @Autowired
     private RestaurantService service;

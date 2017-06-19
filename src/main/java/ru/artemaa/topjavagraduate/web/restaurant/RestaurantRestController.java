@@ -15,13 +15,13 @@ import java.util.List;
  *         15.06.2017
  */
 @RestController
-@RequestMapping(value = RestaurantProfileRestController.REST_URL)
-public class RestaurantProfileRestController {//extends AbstractRestaurantRestController {
-    static final String REST_URL = "/rest/profile";
+@RequestMapping(value = RestaurantRestController.REST_URL)
+public class RestaurantRestController {//extends AbstractRestaurantRestController {
+    static final String REST_URL = "/rest/restaurants";
 
     protected final RestaurantService service;
 
-    public RestaurantProfileRestController(RestaurantService service) {
+    public RestaurantRestController(RestaurantService service) {
         this.service = service;
     }
 
