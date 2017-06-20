@@ -9,7 +9,7 @@ import ru.artemaa.topjavagraduate.web.AuthorizedUser;
 
 @RestController
 @RequestMapping(ProfileUserRestController.REST_URL)
-public class ProfileUserRestController extends AbstractUserController {
+public class ProfileUserRestController extends AbstractUserRestController {
     static final String REST_URL = "/rest/profile";
 
     @Autowired

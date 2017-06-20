@@ -19,7 +19,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
  */
 @RestController
 @RequestMapping(RestaurantAdminRestController.REST_URL)
-public class RestaurantAdminRestController extends RestaurantRestController {
+public class RestaurantAdminRestController extends AbstractRestaurantRestController {
     static final String REST_URL = "/rest/admin/restaurants";
 
     @Autowired

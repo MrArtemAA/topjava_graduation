@@ -13,10 +13,11 @@ import java.util.List;
 public interface VoteService {
 
     //Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException;
+    Vote vote(int userId, int restaurantId);
 
-    Vote save(int userId, int restaurantId);
+    //Vote save(int userId, int restaurantId);
 
-    Vote update(int userId, int restaurantId) throws NotFoundException;
+    //Vote update(int userId, int restaurantId) throws NotFoundException;
 
     Vote getByUser(int userId, LocalDate date) throws NotFoundException;
 

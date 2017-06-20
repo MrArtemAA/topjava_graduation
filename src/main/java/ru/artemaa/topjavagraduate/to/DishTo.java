@@ -4,12 +4,14 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * MrArtemAA
  * 19.06.2017
  */
-public class DishTo extends BaseTo {
+public class DishTo extends BaseTo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @NotBlank
     private String name;
@@ -17,6 +19,12 @@ public class DishTo extends BaseTo {
     @NotNull
     @Range(min = 1, max = 2000)
     private Integer price;
+
+    public DishTo(Integer id, String name, Integer price) {
+        super(id);
+        this.name = name;
+        this.price = price;
+    }
 
     public String getName() {
         return name;

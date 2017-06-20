@@ -1,6 +1,8 @@
 package ru.artemaa.topjavagraduate.to;
 
-abstract public class BaseTo {
+import ru.artemaa.topjavagraduate.HasId;
+
+abstract public class BaseTo implements HasId {
     protected Integer id;
 
     public BaseTo() {

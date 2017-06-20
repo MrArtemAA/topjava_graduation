@@ -11,7 +11,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 
 
-public abstract class AbstractUserController {
+public abstract class AbstractUserRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     //public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
@@ -29,7 +29,7 @@ public abstract class AbstractUserController {
         modificationRestriction = environment.acceptsProfiles(Profiles.HEROKU);
     }*/
 
-    public AbstractUserController(UserService service) {
+    public AbstractUserRestController(UserService service) {
         this.service = service;
     }
 
