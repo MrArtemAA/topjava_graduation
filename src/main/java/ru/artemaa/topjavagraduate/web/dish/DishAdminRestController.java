@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.artemaa.topjavagraduate.model.Dish;
 import ru.artemaa.topjavagraduate.service.DishService;
+import ru.artemaa.topjavagraduate.to.DishTo;
+import ru.artemaa.topjavagraduate.util.ModelUtil;
 
 import java.net.URI;
 
@@ -20,7 +22,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(value = DishAdminRestController.REST_URL)
 public class DishAdminRestController extends DishRestController {
-    static final String REST_URL = "rest/admin/restaurants/{restaurantId}/dishes";
+    static final String REST_URL = "/admin/restaurants/{restaurantId}/dishes";
 
     @Autowired
     public DishAdminRestController(DishService service) {
@@ -37,34 +39,22 @@ public class DishAdminRestController extends DishRestController {
         return service.get(id, restaurantId);
     }
 
-    /*@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DishTo> create(@RequestBody DishTo dishTo, @PathVariable("restaurantId") int restaurantId) {
-        checkNew(dishTo);
-        DishTo created = service.save(dishTo, restaurantId);
-
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }*/
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> create(@RequestBody Dish dish, @PathVariable("restaurantId") int restaurantId) {
-        checkNew(dish);
-        Dish created = service.save(dish, restaurantId);
+    public ResponseEntity<Dish> create(@RequestBody DishTo dishTo, @PathVariable("restaurantId") int restaurantId) {
+        checkNew(dishTo);
+        Dish created = service.save(ModelUtil.createFromTo(dishTo), restaurantId);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
+                .buildAndExpand(restaurantId, created.getId()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Dish dish, @PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
-        checkIdConsistent(dish, id);
-        service.update(dish, restaurantId);
+    public void update(@RequestBody DishTo dishTo, @PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
+        checkIdConsistent(dishTo, id);
+        service.update(ModelUtil.createFromTo(dishTo), restaurantId);
     }
 
     @DeleteMapping(value = "/{id}")

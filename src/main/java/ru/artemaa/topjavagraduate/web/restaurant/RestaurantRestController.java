@@ -16,7 +16,7 @@ import ru.artemaa.topjavagraduate.web.AuthorizedUser;
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_URL)
 public class RestaurantRestController extends AbstractRestaurantRestController {
-    static final String REST_URL = "/rest/restaurants";
+    static final String REST_URL = "/restaurants";
 
     private final VoteService voteService;
 

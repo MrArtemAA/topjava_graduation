@@ -13,9 +13,9 @@ public interface UserService {
 
     User get(int id) throws NotFoundException;
 
-    User save(User entity);
+    User save(User user);
 
-    User update(User entity) throws NotFoundException;
+    User update(User user) throws NotFoundException;
 
     void delete(int id) throws NotFoundException;
 

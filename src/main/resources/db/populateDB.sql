@@ -17,14 +17,14 @@ INSERT INTO restaurants (name) VALUES
   ('Прага'),
   ('У Дяди Федора');
 
-INSERT INTO dishes (name, date, time, price, restaurant_id) VALUES
+INSERT INTO dishes (name, date, price, restaurant_id) VALUES
   /*('Fish', today(), now(), 100, 100002),
   ('Chips', today(), now(), 50, 100002),
   ('Water', today(), now(), 10, 100002),
   ('Soup', today(), now(), 100, 100003),
   ('Steak', today(), now(), 250, 100003);*/
-  ('Fish', today(), now(), 100, 100002),
-  ('Chips', today(), now(), 50, 100002),
-  ('Water', today(), now(), 10, 100002),
-  ('Soup', today(), now(), 100, 100003),
-  ('Steak', today(), now(), 250, 100003);
+  ('Fish', today(), 100, 100002),
+  ('Chips', today(), 50, 100002),
+  ('Water', today(), 10, 100002),
+  ('Soup', today(), 100, 100003),
+  ('Steak', today(), 250, 100003);

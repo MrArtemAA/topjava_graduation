@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * MrArtemAA
@@ -21,9 +20,9 @@ public class Vote extends BaseEntity {
     @NotNull
     private LocalDate date = LocalDate.now();
 
-    @Column(name = "time", nullable = false, columnDefinition = "time default now()")
+    /*@Column(name = "time", nullable = false, columnDefinition = "time default now()")
     @NotNull
-    private LocalTime time = LocalTime.now();
+    private LocalTime time = LocalTime.now();*/
 
     //@Column(name = "user_id", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -65,13 +64,13 @@ public class Vote extends BaseEntity {
         this.date = date;
     }
 
-    public LocalTime getTime() {
+    /*public LocalTime getTime() {
         return time;
     }
 
     public void setTime(LocalTime time) {
         this.time = time;
-    }
+    }*/
 
     public User getUser() {
         return user;

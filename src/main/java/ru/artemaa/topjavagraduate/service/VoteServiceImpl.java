@@ -11,7 +11,6 @@ import ru.artemaa.topjavagraduate.model.Vote;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
@@ -60,7 +59,7 @@ public class VoteServiceImpl implements VoteService {
     //@Override
     private Vote update(Vote vote, int userId, int restaurantId) throws NotFoundException {
         //Vote vote = getByUser(userId, LocalDate.now());
-        vote.setTime(LocalTime.now());
+        //vote.setTime(LocalTime.now());
         vote.setUser(userDao.getOne(userId));
         vote.setRestaurant(restaurantDao.getOne(restaurantId));
         return dao.save(vote);

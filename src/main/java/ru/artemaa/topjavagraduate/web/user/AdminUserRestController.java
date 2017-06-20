@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping(AdminUserRestController.REST_URL)
 public class AdminUserRestController extends AbstractUserRestController {
-    static final String REST_URL = "/rest/admin/users";
+    static final String REST_URL = "/admin/users";
 
     @Autowired
     public AdminUserRestController(UserService service) {
