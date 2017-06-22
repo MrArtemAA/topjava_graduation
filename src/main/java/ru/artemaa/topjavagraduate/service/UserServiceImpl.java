@@ -1,14 +1,20 @@
 package ru.artemaa.topjavagraduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.model.User;
+import ru.artemaa.topjavagraduate.to.UserTo;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.util.List;
 
+import static ru.artemaa.topjavagraduate.util.ModelUtil.updateFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
 
@@ -16,8 +22,8 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId
  * MrArtemAA
  * 26.04.2017
  */
-@Service
-public class UserServiceImpl implements UserService {
+@Service("userService")
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserDao dao;
 
@@ -34,13 +40,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         Assert.notNull(user, "user can't be null");
+        user.setEmail(user.getEmail().toLowerCase());
         return dao.save(user);
     }
 
     @Override
-    public User update(User user) throws NotFoundException {
+    public void update(User user) throws NotFoundException {
         Assert.notNull(user, "user can't be null");
-        return checkNotFoundWithId(dao.save(user), user.getId());
+        user.setEmail(user.getEmail().toLowerCase());
+        checkNotFoundWithId(dao.save(user), user.getId());
+    }
+
+    @Override
+    @Transactional
+    public void update(UserTo userTo) throws NotFoundException {
+        User user = updateFromTo(get(userTo.getId()), userTo);
+        user.setEmail(user.getEmail().toLowerCase());
+        dao.save(user);
     }
 
     @Override
@@ -59,4 +75,12 @@ public class UserServiceImpl implements UserService {
         return checkNotFound(dao.findByEmail(email), "email=" + email);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User u = dao.findByEmail(email.toLowerCase());
+        if (u == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return null;
+    }
 }

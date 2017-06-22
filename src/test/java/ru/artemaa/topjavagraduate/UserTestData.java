@@ -3,6 +3,7 @@ package ru.artemaa.topjavagraduate;
 import ru.artemaa.topjavagraduate.matcher.ModelMatcher;
 import ru.artemaa.topjavagraduate.model.Role;
 import ru.artemaa.topjavagraduate.model.User;
+import ru.artemaa.topjavagraduate.to.UserTo;
 
 import java.util.Objects;
 
@@ -35,6 +36,9 @@ public class UserTestData {
     }
     public static User getUpdated() {
         return new User(START_SEQ, "Updated User", "user@world.org", "user", Role.USER);
+    }
+    public static UserTo getUpdatedTo() {
+        return new UserTo(START_SEQ, "Updated User", "user@world.org", "user");
     }
 
 }

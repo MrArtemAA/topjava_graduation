@@ -26,6 +26,6 @@ public interface VoteDao extends JpaRepository<Vote, Integer> {
 
     Vote findByUserIdAndDate(int userId, LocalDate date);
 
-    Vote findByUserIdAndRestaurantIdAndDate(int userId, int restaurantId, LocalDate date);
+    //Vote findByUserIdAndRestaurantIdAndDate(int userId, int restaurantId, LocalDate date);
 
 }

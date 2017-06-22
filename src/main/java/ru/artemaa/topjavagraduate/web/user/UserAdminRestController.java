@@ -12,12 +12,12 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(AdminUserRestController.REST_URL)
-public class AdminUserRestController extends AbstractUserRestController {
+@RequestMapping(UserAdminRestController.REST_URL)
+public class UserAdminRestController extends AbstractUserRestController {
     static final String REST_URL = "/admin/users";
 
     @Autowired
-    public AdminUserRestController(UserService service) {
+    public UserAdminRestController(UserService service) {
         super(service);
     }
 

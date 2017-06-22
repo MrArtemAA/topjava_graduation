@@ -20,19 +20,32 @@ public class ModelUtil {
     public static final Sort SORT_BY_NAME_EMAIL = new Sort("name", "email");
 
     public static Dish createFromTo(DishTo dishTo) {
-        return new Dish(dishTo.getId(), dishTo.getName(), null, dishTo.getPrice());
+        return new Dish(null, dishTo.getName(), null, dishTo.getPrice());
     }
 
-    /*public static Dish updateFromTo(DishTo dishTo) {
-
-    }*/
+    public static Dish updateFromTo(Dish dish, DishTo dishTo) {
+        dish.setName(dishTo.getName());
+        dish.setPrice(dishTo.getPrice());
+        return dish;
+    }
 
     /*public static DishTo createFromEntity(Dish dish) {
         return new DishTo(dish.getId(), dish.getName(), dish.getPrice());
     }*/
 
+    public static UserTo asTo(User user) {
+        return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword());
+    }
+
     public static User createFromTo(UserTo userTo) {
         return new User(null, userTo.getName(), userTo.getEmail(), userTo.getPassword(), Role.USER);
+    }
+
+    public static User updateFromTo(User user, UserTo userTo) {
+        user.setName(userTo.getName());
+        user.setEmail(userTo.getEmail());
+        user.setPassword(userTo.getPassword());
+        return user;
     }
 
 }

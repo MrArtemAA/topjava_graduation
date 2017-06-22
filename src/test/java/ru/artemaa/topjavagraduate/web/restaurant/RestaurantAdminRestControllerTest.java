@@ -17,6 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
+import static ru.artemaa.topjavagraduate.TestUtil.userHttpBasic;
+import static ru.artemaa.topjavagraduate.UserTestData.ADMIN;
 
 /**
  * @author Artem Areshko
@@ -31,7 +33,8 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
 
     @Test
     public void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL))
+        mockMvc.perform(get(REST_URL)
+                .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -40,7 +43,8 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get(REST_URL + REST1_ID))
+        mockMvc.perform(get(REST_URL + REST1_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -49,7 +53,8 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
 
     @Test
     public void testGetNotFound() throws Exception {
-        mockMvc.perform(get(REST_URL + 1))
+        mockMvc.perform(get(REST_URL + 1)
+                .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -58,6 +63,7 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
     public void testCreate() throws Exception {
         Restaurant expected = getNew();
         ResultActions actions = mockMvc.perform(post(REST_URL)
+                .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
@@ -71,9 +77,21 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
     }
 
     @Test
+    public void testCreateInvalidData() throws Exception {
+        Restaurant restaurant = new Restaurant();
+        mockMvc.perform(post(REST_URL)
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(restaurant)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     public void testUpdate() throws Exception {
         Restaurant expected = getUpdated();
         ResultActions actions = mockMvc.perform(put(REST_URL + REST1_ID)
+                .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
@@ -84,7 +102,8 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + REST1_ID))
+        mockMvc.perform(delete(REST_URL + REST1_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk());
 
@@ -93,7 +112,8 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
 
     @Test
     public void testDeleteNotFound() throws Exception {
-        mockMvc.perform(delete(REST_URL + 1))
+        mockMvc.perform(delete(REST_URL + 1)
+                .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }

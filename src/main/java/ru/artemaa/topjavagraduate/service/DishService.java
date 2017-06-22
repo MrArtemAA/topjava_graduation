@@ -1,6 +1,7 @@
 package ru.artemaa.topjavagraduate.service;
 
 import ru.artemaa.topjavagraduate.model.Dish;
+import ru.artemaa.topjavagraduate.to.DishTo;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -18,7 +19,9 @@ public interface DishService {
 
     Dish save(Dish dish, int restaurantId);
 
-    Dish update(Dish dish, int restaurantId) throws NotFoundException;
+    void update(Dish dish, int restaurantId) throws NotFoundException;
+
+    void update(DishTo dishTo, int restaurantId) throws NotFoundException;
 
     void delete(int id, int restaurantId) throws NotFoundException;
 

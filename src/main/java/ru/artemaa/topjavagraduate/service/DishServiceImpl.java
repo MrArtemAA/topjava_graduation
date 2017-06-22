@@ -7,11 +7,13 @@ import org.springframework.util.Assert;
 import ru.artemaa.topjavagraduate.dao.DishDao;
 import ru.artemaa.topjavagraduate.dao.RestaurantDao;
 import ru.artemaa.topjavagraduate.model.Dish;
+import ru.artemaa.topjavagraduate.to.DishTo;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.artemaa.topjavagraduate.util.ModelUtil.updateFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
 
 /**
@@ -45,10 +47,17 @@ public class DishServiceImpl implements DishService {
 
     @Override
     @Transactional
-    public Dish update(Dish dish, int restaurantId) throws NotFoundException {
+    public void update(Dish dish, int restaurantId) throws NotFoundException {
         Assert.notNull(dish, "dish can't be null");
         get(dish.getId(), restaurantId);
-        return save(dish, restaurantId);
+        save(dish, restaurantId);
+    }
+
+    @Override
+    @Transactional
+    public void update(DishTo dishTo, int restaurantId) throws NotFoundException {
+        Dish dish = updateFromTo(get(dishTo.getId(), restaurantId), dishTo);
+        save(dish, restaurantId);
     }
 
     @Override

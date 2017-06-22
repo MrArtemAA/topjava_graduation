@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.service.RestaurantService;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
@@ -28,7 +29,7 @@ public class RestaurantAdminRestController extends AbstractRestaurantRestControl
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant) {
         checkNew(restaurant);
         Restaurant created = service.save(restaurant);
 
@@ -40,7 +41,7 @@ public class RestaurantAdminRestController extends AbstractRestaurantRestControl
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable("id") int id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable("id") int id) {
         checkIdConsistent(restaurant, id);
         service.update(restaurant);
     }

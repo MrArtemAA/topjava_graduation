@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.artemaa.topjavagraduate.model.User;
 import ru.artemaa.topjavagraduate.service.UserService;
+import ru.artemaa.topjavagraduate.to.UserTo;
 
 import java.util.List;
 
@@ -51,23 +52,20 @@ public abstract class AbstractUserRestController {
 
     public void delete(int id) {
         log.info("delete {}", id);
-        //checkModificationAllowed(id);
         service.delete(id);
     }
 
     public void update(User user, int id) {
         log.info("update {} with id={}", user, id);
         checkIdConsistent(user, id);
-        //checkModificationAllowed(id);
         service.update(user);
     }
 
-    /*public void update(UserTo userTo, int id) {
+    public void update(UserTo userTo, int id) {
         log.info("update {} with id={}", userTo, id);
         checkIdConsistent(userTo, id);
-        checkModificationAllowed(id);
         service.update(userTo);
-    }*/
+    }
 
     public User getByMail(String email) {
         log.info("getByEmail {}", email);

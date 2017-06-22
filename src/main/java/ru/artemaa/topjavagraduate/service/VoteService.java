@@ -4,7 +4,6 @@ import ru.artemaa.topjavagraduate.model.Vote;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * @author Artem Areshko
@@ -21,8 +20,8 @@ public interface VoteService {
 
     Vote getByUser(int userId, LocalDate date) throws NotFoundException;
 
-    List<Vote> getByUser(int userId);
+    //List<Vote> getByUser(int userId);
 
-    List<Vote> getByRestaurant(int restaurantId, LocalDate date);
+    //List<Vote> getByRestaurant(int restaurantId, LocalDate date);
 
 }

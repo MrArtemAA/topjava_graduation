@@ -8,10 +8,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.artemaa.topjavagraduate.model.Dish;
 import ru.artemaa.topjavagraduate.service.DishService;
 import ru.artemaa.topjavagraduate.to.DishTo;
-import ru.artemaa.topjavagraduate.util.ModelUtil;
 
 import java.net.URI;
 
+import static ru.artemaa.topjavagraduate.util.ModelUtil.createFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 
@@ -42,7 +42,7 @@ public class DishAdminRestController extends DishRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> create(@RequestBody DishTo dishTo, @PathVariable("restaurantId") int restaurantId) {
         checkNew(dishTo);
-        Dish created = service.save(ModelUtil.createFromTo(dishTo), restaurantId);
+        Dish created = service.save(createFromTo(dishTo), restaurantId);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -54,7 +54,7 @@ public class DishAdminRestController extends DishRestController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody DishTo dishTo, @PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
         checkIdConsistent(dishTo, id);
-        service.update(ModelUtil.createFromTo(dishTo), restaurantId);
+        service.update(dishTo, restaurantId);
     }
 
     @DeleteMapping(value = "/{id}")

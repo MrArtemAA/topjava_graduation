@@ -1,6 +1,7 @@
 package ru.artemaa.topjavagraduate.service;
 
 import ru.artemaa.topjavagraduate.model.User;
+import ru.artemaa.topjavagraduate.to.UserTo;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.util.List;
@@ -15,7 +16,9 @@ public interface UserService {
 
     User save(User user);
 
-    User update(User user) throws NotFoundException;
+    void update(User user) throws NotFoundException;
+
+    void update(UserTo userTo) throws NotFoundException;
 
     void delete(int id) throws NotFoundException;
 

@@ -3,6 +3,7 @@ package ru.artemaa.topjavagraduate.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.artemaa.topjavagraduate.model.User;
@@ -13,7 +14,7 @@ import java.net.URI;
 
 import static ru.artemaa.topjavagraduate.util.ModelUtil.createFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
-import static ru.artemaa.topjavagraduate.web.user.ProfileUserRestController.REST_URL;
+import static ru.artemaa.topjavagraduate.web.user.UserProfileRestController.REST_URL;
 
 /**
  * MrArtemAA
@@ -27,6 +28,11 @@ public class RootRestController {
     @Autowired
     public RootRestController(UserService service) {
         this.service = service;
+    }
+
+    @RequestMapping()
+    public void basicAnswer() {
+
     }
 
     @PostMapping(value = "/register")

@@ -11,7 +11,6 @@ import ru.artemaa.topjavagraduate.model.Vote;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 
@@ -85,7 +84,7 @@ public class VoteServiceImpl implements VoteService {
                         date.toString()));
     }
 
-    @Override
+    /*@Override
     public List<Vote> getByUser(int userId) {
         return dao.findByUserId(userId);
     }
@@ -94,6 +93,6 @@ public class VoteServiceImpl implements VoteService {
     public List<Vote> getByRestaurant(int restaurantId, LocalDate date) {
         Assert.notNull(date, "date can't be null");
         return dao.findByRestaurantIdAndDate(restaurantId, date);
-    }
+    }*/
 
 }
