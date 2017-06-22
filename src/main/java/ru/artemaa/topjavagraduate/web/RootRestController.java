@@ -3,7 +3,6 @@ package ru.artemaa.topjavagraduate.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.artemaa.topjavagraduate.model.User;
@@ -30,12 +29,12 @@ public class RootRestController {
         this.service = service;
     }
 
-    @RequestMapping()
+    /*@RequestMapping(value = "/")
     public void basicAnswer() {
 
-    }
+    }*/
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/api/register")
     public ResponseEntity<User> register(UserTo userTo) {
         checkNew(userTo);
         User created = service.save(createFromTo(userTo));

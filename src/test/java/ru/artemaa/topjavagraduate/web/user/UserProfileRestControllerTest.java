@@ -21,14 +21,10 @@ import static ru.artemaa.topjavagraduate.UserTestData.*;
 
 public class UserProfileRestControllerTest extends AbstractRestControllerTest {
 
-    private static final String REST_URL = UserAdminRestController.REST_URL + '/';
-
-    private final UserService service;
+    private static final String REST_URL = UserProfileRestController.REST_URL + '/';
 
     @Autowired
-    public UserProfileRestControllerTest(UserService service) {
-        this.service = service;
-    }
+    private UserService service;
 
     @Test
     public void testGet() throws Exception {
@@ -64,7 +60,7 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        MATCHER.assertEquals(ModelUtil.updateFromTo(new User(USER), updatedTo), service.getByEmail("newemail@ya.ru"));
+        MATCHER.assertEquals(ModelUtil.updateFromTo(new User(USER), updatedTo), service.getByEmail("updateduser@world.org"));
     }
 
     @Test

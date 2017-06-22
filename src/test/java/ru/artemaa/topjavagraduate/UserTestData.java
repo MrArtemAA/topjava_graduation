@@ -38,7 +38,7 @@ public class UserTestData {
         return new User(START_SEQ, "Updated User", "user@world.org", "user", Role.USER);
     }
     public static UserTo getUpdatedTo() {
-        return new UserTo(START_SEQ, "Updated User", "user@world.org", "user");
+        return new UserTo(START_SEQ, "Updated User", "updateduser@world.org", "user");
     }
 
 }

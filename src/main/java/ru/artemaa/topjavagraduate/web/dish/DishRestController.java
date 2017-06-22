@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = DishRestController.REST_URL)
 public class DishRestController {
-    static final String REST_URL = "/restaurants/{restaurantId}/dishes";
+    static final String REST_URL = "/api/restaurants/{restaurantId}/dishes";
 
     protected DishService service;
 

@@ -1,4 +1,4 @@
-package ru.artemaa.topjavagraduate.web;
+package ru.artemaa.topjavagraduate;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +13,8 @@ import static ru.artemaa.topjavagraduate.util.ModelUtil.asTo;
  * 19.06.2017
  */
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
+    private static final long serialVersionUID = 1L;
+
     private UserTo userTo;
 
     public AuthorizedUser(User user) {
@@ -20,7 +22,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
         userTo = asTo(user);
     }
 
-    private static AuthorizedUser safeGet() {
+    public static AuthorizedUser safeGet() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return null;
@@ -41,6 +43,15 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     public static int id() {
         return get().userTo.getId();
+    }
+
+    public UserTo getUserTo() {
+        return userTo;
+    }
+
+    @Override
+    public String toString() {
+        return userTo.toString();
     }
 
 }

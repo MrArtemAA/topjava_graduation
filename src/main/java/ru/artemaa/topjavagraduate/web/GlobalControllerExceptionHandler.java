@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +37,13 @@ public class GlobalControllerExceptionHandler {
     @ResponseBody
     public ErrorInfo bindValidationError(HttpServletRequest req, BindingResult result) {
         return logAndGetValidationErrorInfo(req, result);
+    }
+
+    @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseBody
+    public ErrorInfo httpMethodNotSupportedException(HttpServletRequest req, HttpRequestMethodNotSupportedException e) {
+        return logAndGetErrorInfo(req, e, false);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

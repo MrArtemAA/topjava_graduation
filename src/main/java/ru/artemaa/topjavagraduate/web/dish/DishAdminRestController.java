@@ -22,7 +22,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(value = DishAdminRestController.REST_URL)
 public class DishAdminRestController extends DishRestController {
-    static final String REST_URL = "/admin/restaurants/{restaurantId}/dishes";
+    static final String REST_URL = "/api/admin/restaurants/{restaurantId}/dishes";
 
     @Autowired
     public DishAdminRestController(DishService service) {

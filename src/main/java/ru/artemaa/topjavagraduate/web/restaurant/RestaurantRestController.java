@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.artemaa.topjavagraduate.AuthorizedUser;
 import ru.artemaa.topjavagraduate.service.RestaurantService;
 import ru.artemaa.topjavagraduate.service.VoteService;
-import ru.artemaa.topjavagraduate.web.AuthorizedUser;
 
 /**
  * @author Artem Areshko
@@ -16,7 +16,7 @@ import ru.artemaa.topjavagraduate.web.AuthorizedUser;
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_URL)
 public class RestaurantRestController extends AbstractRestaurantRestController {
-    static final String REST_URL = "/restaurants";
+    static final String REST_URL = "/api/restaurants";
 
     private final VoteService voteService;
 

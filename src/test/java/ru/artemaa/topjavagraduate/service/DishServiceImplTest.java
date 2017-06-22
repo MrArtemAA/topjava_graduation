@@ -42,7 +42,7 @@ public class DishServiceImplTest extends AbstractServiceTest {
     @Test
     public void testUpdate() throws Exception {
         Dish updated = getUpdated();
-        updated = service.update(updated, REST1_ID);
+        service.update(updated, REST1_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(DISH2_REST1, DISH1_REST1, updated), service.getAll(REST1_ID, LocalDate.now()));
     }
 

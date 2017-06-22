@@ -24,12 +24,8 @@ public class UserAdminRestControllerTest extends AbstractRestControllerTest {
 
     private static final String REST_URL = UserAdminRestController.REST_URL + '/';
 
-    private final UserService service;
-
     @Autowired
-    public UserAdminRestControllerTest(UserService service) {
-        this.service = service;
-    }
+    private UserService service;
 
     @Test
     public void testGet() throws Exception {
@@ -37,7 +33,6 @@ public class UserAdminRestControllerTest extends AbstractRestControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
-        // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentMatcher(ADMIN));
     }

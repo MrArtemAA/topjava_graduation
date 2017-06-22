@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.artemaa.topjavagraduate.AuthorizedUser;
 import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.model.User;
 import ru.artemaa.topjavagraduate.to.UserTo;
@@ -77,10 +78,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User u = dao.findByEmail(email.toLowerCase());
-        if (u == null) {
+        User user = dao.findByEmail(email.toLowerCase());
+        if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
-        return null;
+        return new AuthorizedUser(user);
     }
 }
