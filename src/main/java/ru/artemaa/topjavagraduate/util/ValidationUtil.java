@@ -1,5 +1,7 @@
 package ru.artemaa.topjavagraduate.util;
 
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import ru.artemaa.topjavagraduate.HasId;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
@@ -53,6 +55,14 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+
+    public static String getMessage(ObjectError error) {
+        StringBuilder sb = new StringBuilder();
+        if (error instanceof FieldError) {
+            sb.append(((FieldError) error).getField()).append(" ");
+        }
+        return sb.append(error.getDefaultMessage()).toString();
     }
 
 }

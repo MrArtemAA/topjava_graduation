@@ -26,7 +26,7 @@ import static ru.artemaa.topjavagraduate.UserTestData.ADMIN;
  */
 public class RestaurantAdminRestControllerTest extends AbstractRestControllerTest {
 
-    private static final String REST_URL = RestaurantRestController.REST_URL + "/";
+    private static final String REST_URL = RestaurantAdminRestController.REST_URL + "/";
 
     @Autowired
     private RestaurantService service;

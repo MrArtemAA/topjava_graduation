@@ -3,9 +3,9 @@ package ru.artemaa.topjavagraduate.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,11 +32,18 @@ public class GlobalControllerExceptionHandler {
         return logAndGetErrorInfo(req, e, false);
     }
 
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
+    /*@ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
     @ExceptionHandler(BindException.class)
     @ResponseBody
     public ErrorInfo bindValidationError(HttpServletRequest req, BindingResult result) {
         return logAndGetValidationErrorInfo(req, result);
+    }*/
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ErrorInfo restValidationError(HttpServletRequest req, MethodArgumentNotValidException e) {
+        return logAndGetValidationErrorInfo(req, e.getBindingResult());
     }
 
     @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
@@ -55,6 +62,7 @@ public class GlobalControllerExceptionHandler {
 
     private ErrorInfo logAndGetValidationErrorInfo(HttpServletRequest req, BindingResult result) {
         String[] details = result.getAllErrors().stream()
+                .map(ValidationUtil::getMessage)
                 .toArray(String[]::new);
 
         return logAndGetErrorInfo(req, "ValidationException", details);
