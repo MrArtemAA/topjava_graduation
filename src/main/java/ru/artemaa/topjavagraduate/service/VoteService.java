@@ -1,6 +1,7 @@
 package ru.artemaa.topjavagraduate.service;
 
 import ru.artemaa.topjavagraduate.model.Vote;
+import ru.artemaa.topjavagraduate.util.exception.LateVoteException;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 public interface VoteService {
 
     //Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException;
-    Vote vote(int userId, int restaurantId);
+    Vote vote(int userId, int restaurantId) throws LateVoteException;
 
     //Vote save(int userId, int restaurantId);
 

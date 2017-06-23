@@ -24,16 +24,14 @@ public class Vote extends BaseEntity {
     @NotNull
     private LocalTime time = LocalTime.now();*/
 
-    //@Column(name = "user_id", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")//, nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User user;
 
-    //@Column(name = "restaurant_id", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id")//, nullable = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;

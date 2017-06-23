@@ -8,9 +8,11 @@ import ru.artemaa.topjavagraduate.dao.RestaurantDao;
 import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.dao.VoteDao;
 import ru.artemaa.topjavagraduate.model.Vote;
+import ru.artemaa.topjavagraduate.util.exception.LateVoteException;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 
@@ -20,6 +22,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
  */
 @Service
 public class VoteServiceImpl implements VoteService {
+    private static final LocalTime VOTE_DEADLINE = LocalTime.of(11, 00);
 
     private final VoteDao dao;
     private final UserDao userDao;
@@ -56,7 +59,7 @@ public class VoteServiceImpl implements VoteService {
     }
 
     //@Override
-    private Vote update(Vote vote, int userId, int restaurantId) throws NotFoundException {
+    private Vote update(Vote vote, int userId, int restaurantId) {
         //Vote vote = getByUser(userId, LocalDate.now());
         //vote.setTime(LocalTime.now());
         vote.setUser(userDao.getOne(userId));
@@ -66,9 +69,12 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
-    public Vote vote(int userId, int restaurantId) {
+    public Vote vote(int userId, int restaurantId) throws LateVoteException {
         try {
             Vote vote = getByUser(userId, LocalDate.now());
+            if (LocalTime.now().isAfter(VOTE_DEADLINE)) {
+                throw new LateVoteException(VOTE_DEADLINE);
+            }
             return update(vote, userId, restaurantId);
         } catch (NotFoundException nfe) {
             return save(userId, restaurantId);
