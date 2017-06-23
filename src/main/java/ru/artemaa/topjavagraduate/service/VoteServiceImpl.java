@@ -22,7 +22,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
  */
 @Service
 public class VoteServiceImpl implements VoteService {
-    static final LocalTime VOTE_DEADLINE = LocalTime.of(11, 00);
+    public static final LocalTime VOTE_DEADLINE = LocalTime.of(11, 00);
 
     private final VoteDao dao;
     private final UserDao userDao;

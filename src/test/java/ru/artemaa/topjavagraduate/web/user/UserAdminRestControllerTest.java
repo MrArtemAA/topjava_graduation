@@ -117,7 +117,7 @@ public class UserAdminRestControllerTest extends AbstractRestControllerTest {
     @Test
     public void testCreateInvalid() throws Exception {
         User expected = new User(null, null, null, "newPass", Role.USER, Role.ADMIN);
-        ResultActions action = mockMvc.perform(post(REST_URL)
+        mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(expected)))

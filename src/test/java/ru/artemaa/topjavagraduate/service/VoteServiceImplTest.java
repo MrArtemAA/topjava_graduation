@@ -30,7 +30,7 @@ public class VoteServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
-    public void testChangeVote() throws Exception {
+    public void testVoteChange() throws Exception {
         if (LocalTime.now().isAfter(VOTE_DEADLINE)) {
             thrown.expect(LateVoteException.class);
         }

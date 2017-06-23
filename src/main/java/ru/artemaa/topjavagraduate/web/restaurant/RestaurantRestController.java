@@ -1,13 +1,17 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.artemaa.topjavagraduate.AuthorizedUser;
 import ru.artemaa.topjavagraduate.service.RestaurantService;
 import ru.artemaa.topjavagraduate.service.VoteService;
+import ru.artemaa.topjavagraduate.util.exception.ErrorInfo;
+import ru.artemaa.topjavagraduate.util.exception.LateVoteException;
+import ru.artemaa.topjavagraduate.web.GlobalControllerExceptionHandler;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Artem Areshko
@@ -20,15 +24,27 @@ public class RestaurantRestController extends AbstractRestaurantRestController {
 
     private final VoteService voteService;
 
+    private GlobalControllerExceptionHandler exceptionInfoHandler;
+
     @Autowired
     public RestaurantRestController(RestaurantService service, VoteService voteService) {
         super(service);
         this.voteService = voteService;
     }
 
+    @Autowired
+    public void setExceptionInfoHandler(GlobalControllerExceptionHandler exceptionInfoHandler) {
+        this.exceptionInfoHandler = exceptionInfoHandler;
+    }
+
     @PostMapping(value = "/{id}/vote")
     public void vote(@PathVariable("id") int id) {
         voteService.vote(AuthorizedUser.id(), id);
+    }
+
+    @ExceptionHandler(LateVoteException.class)
+    public ResponseEntity<ErrorInfo> lateVoteException(HttpServletRequest req, LateVoteException e) {
+        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
 }
