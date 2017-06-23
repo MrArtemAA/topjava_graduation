@@ -16,7 +16,7 @@ import static ru.artemaa.topjavagraduate.RestaurantTestData.REST2_ID;
  * @author Artem Areshko
  *         14.06.2017
  */
-public class DishServiceImplTest extends AbstractServiceTest {
+public class DishServiceTest extends AbstractServiceTest {
 
     @Autowired
     private DishService service;

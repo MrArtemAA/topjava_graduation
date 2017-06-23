@@ -1,8 +1,7 @@
 package ru.artemaa.topjavagraduate.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * MrArtemAA
@@ -12,9 +11,9 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "Restaurants", uniqueConstraints = @UniqueConstraint(name = "restaurants_unique_name_idx", columnNames = {"name"}))
 public class Restaurant extends NamedEntity {
 
-    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
-    @OrderBy("name DESC")
-    private List<Dish> dishes;*/
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OrderBy("name ASC")
+    private List<Dish> dishes;
 
     public Restaurant() {
     }
@@ -27,8 +26,8 @@ public class Restaurant extends NamedEntity {
         super(id, name);
     }
 
-    /*public List<Dish> getDishes() {
+    public List<Dish> getDishes() {
         return dishes;
-    }*/
+    }
 
 }

@@ -19,7 +19,7 @@ import static ru.artemaa.topjavagraduate.service.VoteServiceImpl.VOTE_DEADLINE;
  * @author Artem Areshko
  *         22.06.2017
  */
-public class VoteServiceImplTest extends AbstractServiceTest {
+public class VoteServiceTest extends AbstractServiceTest {
 
     @Autowired
     private VoteService service;

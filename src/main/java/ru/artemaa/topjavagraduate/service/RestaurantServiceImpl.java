@@ -7,6 +7,7 @@ import ru.artemaa.topjavagraduate.dao.RestaurantDao;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
@@ -31,6 +32,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public Restaurant getWithDishes(int id, LocalDate date) throws NotFoundException {
+        return checkNotFoundWithId(dao.getWithDishes(id, date), id);
+    }
+
+    @Override
     public Restaurant save(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant can't be null");
         return dao.save(restaurant);
@@ -52,4 +58,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         return dao.findAll();
     }
 
+    @Override
+    public List<Restaurant> getAllWithDishes(LocalDate date) {
+        return dao.getAllWithDishes(date);
+    }
 }

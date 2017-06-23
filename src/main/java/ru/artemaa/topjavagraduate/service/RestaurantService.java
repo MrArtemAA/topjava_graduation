@@ -3,6 +3,7 @@ package ru.artemaa.topjavagraduate.service;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ public interface RestaurantService {
 
     Restaurant get(int id) throws NotFoundException;
 
+    Restaurant getWithDishes(int id, LocalDate date) throws NotFoundException;
+
     Restaurant save(Restaurant restaurant);
 
     void update(Restaurant restaurant) throws NotFoundException;
@@ -20,5 +23,7 @@ public interface RestaurantService {
     void delete(int id) throws NotFoundException;
 
     List<Restaurant> getAll();
+
+    List<Restaurant> getAllWithDishes(LocalDate date);
 
 }
