@@ -1,13 +1,18 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.service.RestaurantService;
+import ru.artemaa.topjavagraduate.util.exception.ErrorInfo;
+import ru.artemaa.topjavagraduate.web.GlobalControllerExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 
@@ -23,9 +28,18 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 public class RestaurantAdminRestController extends AbstractRestaurantRestController {
     static final String REST_URL = "/api/admin/restaurants";
 
+    public static final String EXCEPTION_DUPLICATE_RESTAURANT = "Restaurant with this name already exists";
+
+    private GlobalControllerExceptionHandler exceptionInfoHandler;
+
     @Autowired
     public RestaurantAdminRestController(RestaurantService service) {
         super(service);
+    }
+
+    @Autowired
+    public void setExceptionInfoHandler(GlobalControllerExceptionHandler exceptionInfoHandler) {
+        this.exceptionInfoHandler = exceptionInfoHandler;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -49,6 +63,11 @@ public class RestaurantAdminRestController extends AbstractRestaurantRestControl
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         service.delete(id);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorInfo> duplicateEmailException(HttpServletRequest req, DataIntegrityViolationException e) {
+        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, EXCEPTION_DUPLICATE_RESTAURANT, HttpStatus.CONFLICT);
     }
 
 }

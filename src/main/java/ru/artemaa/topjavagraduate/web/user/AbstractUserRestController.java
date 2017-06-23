@@ -2,10 +2,18 @@ package ru.artemaa.topjavagraduate.web.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.artemaa.topjavagraduate.model.User;
 import ru.artemaa.topjavagraduate.service.UserService;
 import ru.artemaa.topjavagraduate.to.UserTo;
+import ru.artemaa.topjavagraduate.util.exception.ErrorInfo;
+import ru.artemaa.topjavagraduate.web.GlobalControllerExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
@@ -15,23 +23,19 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 public abstract class AbstractUserRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    //public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
-    //public static final String EXCEPTION_MODIFICATION_RESTRICTION = "exception.user.modificationRestriction";
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
 
     private final UserService service;
 
-    //@Autowired
-    //private ExceptionInfoHandler exceptionInfoHandler;
-
-    //private boolean modificationRestriction;
-
-    /*@Autowired
-    public void setEnvironment(Environment environment) {
-        modificationRestriction = environment.acceptsProfiles(Profiles.HEROKU);
-    }*/
+    private GlobalControllerExceptionHandler exceptionInfoHandler;
 
     public AbstractUserRestController(UserService service) {
         this.service = service;
+    }
+
+    @Autowired
+    public void setExceptionInfoHandler(GlobalControllerExceptionHandler exceptionInfoHandler) {
+        this.exceptionInfoHandler = exceptionInfoHandler;
     }
 
     public List<User> getAll() {
@@ -72,20 +76,8 @@ public abstract class AbstractUserRestController {
         return service.getByEmail(email);
     }
 
-    /*public void enable(int id, boolean enabled) {
-        log.info((enabled ? "enable " : "disable ") + id);
-        checkModificationAllowed(id);
-        service.enable(id, enabled);
-    }*/
-
-    /*public void checkModificationAllowed(int id) {
-        if (modificationRestriction && id < BaseEntity.START_SEQ + 2) {
-            throw new ApplicationException(EXCEPTION_MODIFICATION_RESTRICTION, HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
-        }
-    }
-
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorInfo> duplicateEmailException(HttpServletRequest req, DataIntegrityViolationException e) {
         return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, EXCEPTION_DUPLICATE_EMAIL, HttpStatus.CONFLICT);
-    }*/
+    }
 }

@@ -55,6 +55,13 @@ public class RestaurantRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
+    public void testUnauthorized() throws Exception {
+        mockMvc.perform(get(REST_URL))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     public void testPostNotAllowed() throws Exception {
         mockMvc.perform(post(REST_URL)
                 .with(userHttpBasic(USER))

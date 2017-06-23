@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.artemaa.topjavagraduate.model.User;
 import ru.artemaa.topjavagraduate.service.UserService;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class UserAdminRestController extends AbstractUserRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
+    public ResponseEntity<User> createWithLocation(@Valid @RequestBody User user) {
         User created = super.create(user);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -52,7 +53,7 @@ public class UserAdminRestController extends AbstractUserRestController {
 
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody User user, @PathVariable("id") int id) {
+    public void update(@Valid @RequestBody User user, @PathVariable("id") int id) {
         super.update(user, id);
     }
 

@@ -22,7 +22,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
  */
 @Service
 public class VoteServiceImpl implements VoteService {
-    private static final LocalTime VOTE_DEADLINE = LocalTime.of(11, 00);
+    static final LocalTime VOTE_DEADLINE = LocalTime.of(11, 00);
 
     private final VoteDao dao;
     private final UserDao userDao;
@@ -69,15 +69,15 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
-    public Vote vote(int userId, int restaurantId) throws LateVoteException {
+    public void vote(int userId, int restaurantId) throws LateVoteException {
         try {
             Vote vote = getByUser(userId, LocalDate.now());
             if (LocalTime.now().isAfter(VOTE_DEADLINE)) {
                 throw new LateVoteException(VOTE_DEADLINE);
             }
-            return update(vote, userId, restaurantId);
+            update(vote, userId, restaurantId);
         } catch (NotFoundException nfe) {
-            return save(userId, restaurantId);
+            save(userId, restaurantId);
         }
     }
 

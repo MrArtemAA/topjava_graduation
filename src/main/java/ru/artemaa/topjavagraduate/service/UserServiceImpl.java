@@ -15,6 +15,7 @@ import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.util.List;
 
+import static ru.artemaa.topjavagraduate.util.ModelUtil.prepareToSave;
 import static ru.artemaa.topjavagraduate.util.ModelUtil.updateFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
@@ -41,14 +42,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User save(User user) {
         Assert.notNull(user, "user can't be null");
-        user.setEmail(user.getEmail().toLowerCase());
+        prepareToSave(user);
         return dao.save(user);
     }
 
     @Override
     public void update(User user) throws NotFoundException {
         Assert.notNull(user, "user can't be null");
-        user.setEmail(user.getEmail().toLowerCase());
+        prepareToSave(user);
         checkNotFoundWithId(dao.save(user), user.getId());
     }
 
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public void update(UserTo userTo) throws NotFoundException {
         User user = updateFromTo(get(userTo.getId()), userTo);
-        user.setEmail(user.getEmail().toLowerCase());
+        prepareToSave(user);
         dao.save(user);
     }
 

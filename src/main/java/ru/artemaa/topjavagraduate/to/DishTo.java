@@ -20,6 +20,8 @@ public class DishTo extends BaseTo implements Serializable {
     @Range(min = 1, max = 2000)
     private Integer price;
 
+    public DishTo() {}
+
     public DishTo(Integer id, String name, Integer price) {
         super(id);
         this.name = name;

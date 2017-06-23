@@ -2,13 +2,14 @@ package ru.artemaa.topjavagraduate.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * MrArtemAA
  * 24.04.2017
  */
 @Entity
-@Table(name = "Restaurants")
+@Table(name = "Restaurants", uniqueConstraints = @UniqueConstraint(name = "restaurants_unique_name_idx", columnNames = {"name"}))
 public class Restaurant extends NamedEntity {
 
     /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")

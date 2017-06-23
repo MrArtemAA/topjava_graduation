@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.artemaa.topjavagraduate.model.Role;
 import ru.artemaa.topjavagraduate.model.User;
 import ru.artemaa.topjavagraduate.service.UserService;
@@ -49,9 +51,18 @@ public class UserAdminRestControllerTest extends AbstractRestControllerTest {
     public void testGetByEmail() throws Exception {
         mockMvc.perform(get(REST_URL + "by?email=" + ADMIN.getEmail())
                 .with(userHttpBasic(ADMIN)))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentMatcher(ADMIN));
+    }
+
+    @Test
+    public void testGetByEmailNotFound() throws Exception {
+        mockMvc.perform(get(REST_URL + "by?email=noemail@world.org")
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -72,16 +83,59 @@ public class UserAdminRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testGetUnauth() throws Exception {
+    public void testUnauthorized() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
-    public void testGetForbidden() throws Exception {
+    public void testForbidden() throws Exception {
         mockMvc.perform(get(REST_URL)
                 .with(userHttpBasic(USER)))
+                .andDo(print())
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void testCreate() throws Exception {
+        User expected = getNew();
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(expected)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+
+        User returned = MATCHER.fromJsonAction(action);
+        expected.setId(returned.getId());
+
+        MATCHER.assertEquals(expected, returned);
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, expected, USER), service.getAll());
+    }
+
+    @Test
+    public void testCreateInvalid() throws Exception {
+        User expected = new User(null, null, null, "newPass", Role.USER, Role.ADMIN);
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(expected)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(content().json("{'cause':'ValidationException'}"))
+                .andDo(print());
+    }
+
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    public void testCreateDuplicate() throws Exception {
+        User expected = new User(null, "New", "user@world.org", "newPass", Role.USER, Role.ADMIN);
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(expected)))
+                .andDo(print())
+                .andExpect(status().isConflict());
     }
 
     @Test
@@ -91,24 +145,36 @@ public class UserAdminRestControllerTest extends AbstractRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(updated)))
+                .andDo(print())
                 .andExpect(status().isOk());
 
         MATCHER.assertEquals(updated, service.get(USER_ID));
     }
 
     @Test
-    public void testCreate() throws Exception {
-        User expected = getNew();
-        ResultActions action = mockMvc.perform(post(REST_URL)
+    public void testUpdateInvalid() throws Exception {
+        User updated = new User(USER);
+        updated.setName(null);
+        mockMvc.perform(put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(expected))).andExpect(status().isCreated());
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print())
+                .andExpect(content().json("{'cause':'ValidationException'}"));
+    }
 
-        User returned = MATCHER.fromJsonAction(action);
-        expected.setId(returned.getId());
-
-        MATCHER.assertEquals(expected, returned);
-        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, expected, USER), service.getAll());
+    @Test
+    @Transactional(propagation = Propagation.NEVER)
+    public void testUpdateDuplicate() throws Exception {
+        User updated = new User(USER);
+        updated.setEmail("admin@world.org");
+        mockMvc.perform(put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isConflict())
+                .andDo(print());
     }
 
     @Test
@@ -121,56 +187,4 @@ public class UserAdminRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(MATCHER.contentListMatcher(ADMIN, USER));
     }
 
-    @Test
-    public void testUpdateInvalid() throws Exception {
-        User updated = new User(USER);
-        updated.setName("");
-        mockMvc.perform(put(REST_URL + USER_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(updated)))
-                .andExpect(status().isUnprocessableEntity())
-                .andDo(print())
-                .andExpect(content().json("{'cause':'ValidationException'}"))
-                .andDo(print());
-    }
-
-    @Test
-    public void testCreateInvalid() throws Exception {
-        User expected = new User(null, null, "", "newPass", Role.USER, Role.ADMIN);
-        ResultActions action = mockMvc.perform(post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(expected)))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(content().json("{'cause':'ValidationException'}"))
-                .andDo(print());
-    }
-
-    /*@Test
-    @Transactional(propagation = Propagation.NEVER)
-    public void testUpdateDuplicate() throws Exception {
-        User updated = new User(USER);
-        updated.setEmail("admin@gmail.com");
-        mockMvc.perform(put(REST_URL + USER_ID)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(updated)))
-                .andExpect(status().isConflict())
-                .andExpect(jsonMessage("$.details", EXCEPTION_DUPLICATE_EMAIL))
-                .andDo(print());
-    }*/
-
-    /*@Test
-    @Transactional(propagation = Propagation.NEVER)
-    public void testCreateDuplicate() throws Exception {
-        User expected = new User(null, "New", "user@yandex.ru", "newPass", 2300, Role.ROLE_USER, Role.ROLE_ADMIN);
-        mockMvc.perform(post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(ADMIN))
-                .content(JsonUtil.writeValue(expected)))
-                .andExpect(status().isConflict())
-                .andExpect(jsonMessage("$.details", EXCEPTION_DUPLICATE_EMAIL));
-
-    }*/
 }

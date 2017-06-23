@@ -2,6 +2,7 @@ package ru.artemaa.topjavagraduate;
 
 import ru.artemaa.topjavagraduate.matcher.ModelMatcher;
 import ru.artemaa.topjavagraduate.model.Dish;
+import ru.artemaa.topjavagraduate.to.DishTo;
 
 import java.time.LocalDate;
 
@@ -15,6 +16,7 @@ import static ru.artemaa.topjavagraduate.model.BaseEntity.START_SEQ;
  */
 public class DishTestData {
     public static final ModelMatcher<Dish> MATCHER = ModelMatcher.of(Dish.class);
+    public static final ModelMatcher<DishTo> MATCHER_TO = ModelMatcher.of(DishTo.class);
 
     public static final int DISH1_REST1_ID = START_SEQ + 4;
     public static final int DISH1_REST2_ID = START_SEQ + 7;
@@ -29,8 +31,14 @@ public class DishTestData {
     public static Dish getNew() {
         return new Dish(null, "Juice", REST2, LocalDate.now(), 50);
     }
+    public static DishTo getNewTo() {
+        return new DishTo(null, "Juice", 50);
+    }
     public static Dish getUpdated() {
         return new Dish(DISH1_REST1_ID + 2, "Still water", REST1, LocalDate.now(), 15);
+    }
+    public static DishTo getUpdatedTo() {
+        return new DishTo(DISH1_REST1_ID + 2, "Still water", 15);
     }
 
 }

@@ -1,6 +1,7 @@
 package ru.artemaa.topjavagraduate.util;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.util.StringUtils;
 import ru.artemaa.topjavagraduate.model.Dish;
 import ru.artemaa.topjavagraduate.model.Role;
 import ru.artemaa.topjavagraduate.model.User;
@@ -29,6 +30,10 @@ public class ModelUtil {
         return dish;
     }
 
+    public static DishTo asTo(Dish dish) {
+        return new DishTo(dish.getId(), dish.getName(), dish.getPrice());
+    }
+
     /*public static DishTo createFromEntity(Dish dish) {
         return new DishTo(dish.getId(), dish.getName(), dish.getPrice());
     }*/
@@ -45,6 +50,13 @@ public class ModelUtil {
         user.setName(userTo.getName());
         user.setEmail(userTo.getEmail());
         user.setPassword(userTo.getPassword());
+        return user;
+    }
+
+    public static User prepareToSave(User user) {
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            user.setEmail(user.getEmail().toLowerCase());
+        }
         return user;
     }
 

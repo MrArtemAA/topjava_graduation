@@ -2,7 +2,9 @@ package ru.artemaa.topjavagraduate.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,6 +27,13 @@ import java.util.Arrays;
 public class GlobalControllerExceptionHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
+    @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseBody
+    public ErrorInfo httpMethodNotSupportedException(HttpServletRequest req, HttpRequestMethodNotSupportedException e) {
+        return logAndGetErrorInfo(req, e, false);
+    }
+
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
     @ResponseBody
@@ -46,11 +55,11 @@ public class GlobalControllerExceptionHandler {
         return logAndGetValidationErrorInfo(req, e.getBindingResult());
     }
 
-    @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
-    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
+    @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseBody
-    public ErrorInfo httpMethodNotSupportedException(HttpServletRequest req, HttpRequestMethodNotSupportedException e) {
-        return logAndGetErrorInfo(req, e, false);
+    public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+        return logAndGetErrorInfo(req, e, true);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -81,6 +90,13 @@ public class GlobalControllerExceptionHandler {
     private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, String cause, String... details) {
         LOG.warn("{} exception at request {}: {}", cause, req.getRequestURL(), Arrays.toString(details));
         return new ErrorInfo(req.getRequestURL(), cause, details);
+    }
+
+    public ResponseEntity<ErrorInfo> getErrorInfoResponseEntity(HttpServletRequest req, Exception e, String message, HttpStatus httpStatus) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        LOG.warn("Application error: {}", rootCause.toString());
+        ErrorInfo errorInfo = logAndGetErrorInfo(req, rootCause.getClass().getSimpleName(), message);
+        return new ResponseEntity<>(errorInfo, httpStatus);
     }
 
 }

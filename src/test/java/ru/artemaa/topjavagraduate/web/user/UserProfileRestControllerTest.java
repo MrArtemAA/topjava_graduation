@@ -3,6 +3,8 @@ package ru.artemaa.topjavagraduate.web.user;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.artemaa.topjavagraduate.model.User;
 import ru.artemaa.topjavagraduate.service.UserService;
 import ru.artemaa.topjavagraduate.to.UserTo;
@@ -37,8 +39,9 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void testGetUnauth() throws Exception {
+    public void testUnauthorized() throws Exception {
         mockMvc.perform(get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
@@ -46,6 +49,7 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
     public void testDelete() throws Exception {
         mockMvc.perform(delete(REST_URL)
                 .with(userHttpBasic(USER)))
+                .andDo(print())
                 .andExpect(status().isOk());
         MATCHER.assertCollectionEquals(Collections.singletonList(ADMIN), service.getAll());
     }
@@ -65,7 +69,7 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void testUpdateInvalid() throws Exception {
-        UserTo updatedTo = new UserTo(null, null, "password", null);
+        UserTo updatedTo = new UserTo(null, null, "user@world.org", "password");
 
         mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER))
@@ -76,16 +80,16 @@ public class UserProfileRestControllerTest extends AbstractRestControllerTest {
                 .andDo(print());
     }
 
-    /*@Test
+    @Test
     @Transactional(propagation = Propagation.NEVER)
     public void testDuplicate() throws Exception {
-        UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword", 1500);
+        UserTo updatedTo = new UserTo(null, "newName", "admin@world.org", "newPassword");
 
         mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER))
                 .content(JsonUtil.writeValue(updatedTo)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonMessage("$.details", EXCEPTION_DUPLICATE_EMAIL))
                 .andDo(print());
-    }*/
+    }
+
 }

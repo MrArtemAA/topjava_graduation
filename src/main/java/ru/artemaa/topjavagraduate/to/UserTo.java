@@ -18,7 +18,7 @@ public class UserTo extends BaseTo implements Serializable {
     @NotBlank
     private String email;
 
-    @Length(min = 5, max = 32)
+    @Length(min = 4)
     private String password;
 
     public UserTo() {

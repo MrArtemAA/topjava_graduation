@@ -60,7 +60,7 @@ public class ValidationUtil {
     public static String getMessage(ObjectError error) {
         StringBuilder sb = new StringBuilder();
         if (error instanceof FieldError) {
-            sb.append(((FieldError) error).getField()).append(" ");
+            sb.append(((FieldError) error).getField()).append(": ");
         }
         return sb.append(error.getDefaultMessage()).toString();
     }

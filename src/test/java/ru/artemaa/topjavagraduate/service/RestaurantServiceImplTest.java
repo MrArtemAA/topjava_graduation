@@ -2,7 +2,6 @@ package ru.artemaa.topjavagraduate.service;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
@@ -37,14 +36,6 @@ public class RestaurantServiceImplTest extends AbstractServiceTest {
         Restaurant restaurant = service.save(newRestaurant);
         newRestaurant.setId(restaurant.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(newRestaurant, REST1, REST2), service.getAll());
-    }
-
-    @Test
-    public void testSaveNotValid() throws Exception {
-        thrown.expect(DataIntegrityViolationException.class);
-        Restaurant newRestaurant = getNew();
-        newRestaurant.setName(null);
-        service.save(newRestaurant);
     }
 
     @Test

@@ -1,62 +1,57 @@
-package ru.artemaa.topjavagraduate.web.restaurant;
+package ru.artemaa.topjavagraduate.web.dish;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.artemaa.topjavagraduate.model.Restaurant;
-import ru.artemaa.topjavagraduate.service.RestaurantService;
+import ru.artemaa.topjavagraduate.model.Dish;
+import ru.artemaa.topjavagraduate.service.DishService;
+import ru.artemaa.topjavagraduate.to.DishTo;
 import ru.artemaa.topjavagraduate.util.JsonUtil;
 import ru.artemaa.topjavagraduate.web.AbstractRestControllerTest;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
+import static ru.artemaa.topjavagraduate.DishTestData.*;
+import static ru.artemaa.topjavagraduate.RestaurantTestData.REST1_ID;
+import static ru.artemaa.topjavagraduate.RestaurantTestData.REST2_ID;
 import static ru.artemaa.topjavagraduate.TestUtil.userHttpBasic;
 import static ru.artemaa.topjavagraduate.UserTestData.ADMIN;
 import static ru.artemaa.topjavagraduate.UserTestData.USER;
+import static ru.artemaa.topjavagraduate.util.ModelUtil.asTo;
+import static ru.artemaa.topjavagraduate.util.ModelUtil.updateFromTo;
 
 /**
  * @author Artem Areshko
- *         15.06.2017
+ *         23.06.2017
  */
-public class RestaurantAdminRestControllerTest extends AbstractRestControllerTest {
-
-    private static final String REST_URL = RestaurantAdminRestController.REST_URL + "/";
+public class DishAdminRestControllerTest extends AbstractRestControllerTest {
+    private static final String REST_URL = DishAdminRestController.REST_URL.replace("{restaurantId}", String.valueOf(REST1_ID)) + "/";
 
     @Autowired
-    private RestaurantService service;
-
-    @Test
-    public void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL)
-                .with(userHttpBasic(ADMIN)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentListMatcher(REST1, REST2));
-    }
+    private DishService service;
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get(REST_URL + REST1_ID)
+        mockMvc.perform(get(REST_URL + DISH1_REST1_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentMatcher(REST1));
+                .andExpect(MATCHER.contentMatcher(DISH1_REST1));
     }
 
     @Test
     public void testGetNotFound() throws Exception {
-        mockMvc.perform(get(REST_URL + 1)
+        mockMvc.perform(get(REST_URL + DISH1_REST2_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
@@ -79,63 +74,67 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
 
     @Test
     public void testCreate() throws Exception {
-        Restaurant expected = getNew();
-        ResultActions actions = mockMvc.perform(post(REST_URL)
+        DishTo expected = getNewTo();
+        ResultActions actions = mockMvc.perform(post(DishAdminRestController.REST_URL.replace("{restaurantId}", String.valueOf(REST2_ID)))
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 
-        Restaurant saved = MATCHER.fromJsonAction(actions);
+        Dish saved = MATCHER.fromJsonAction(actions);
         expected.setId(saved.getId());
+        saved = updateFromTo(saved, expected);
 
-        MATCHER.assertEquals(expected, saved);
-        MATCHER.assertCollectionEquals(Arrays.asList(expected, REST1, REST2), service.getAll());
+        MATCHER.assertCollectionEquals(Arrays.asList(saved, DISH1_REST2, DISH2_REST2), service.getAll(REST2_ID, LocalDate.now()));
     }
 
     @Test
     public void testCreateInvalid() throws Exception {
-        Restaurant restaurant = new Restaurant();
-        mockMvc.perform(post(REST_URL)
+        DishTo expected = getNewTo();
+        expected.setName(null);
+        mockMvc.perform(post(DishAdminRestController.REST_URL.replace("{restaurantId}", String.valueOf(REST2_ID)))
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(restaurant)))
+                .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    //@Ignore
+    @Ignore
     @Test
     @Transactional(propagation = Propagation.NEVER)
     public void testCreateDuplicate() throws Exception {
-        Restaurant restaurant = new Restaurant(null, "Прага");
+        DishTo expected = asTo(DISH1_REST1);
+        expected.setId(null);
+        expected.setPrice(500);
         mockMvc.perform(post(REST_URL)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(restaurant)))
+                .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
                 .andExpect(status().isConflict());
     }
 
     @Test
     public void testUpdate() throws Exception {
-        Restaurant expected = getUpdated();
-        ResultActions actions = mockMvc.perform(put(REST_URL + REST1_ID)
+        DishTo expected = getUpdatedTo();
+        mockMvc.perform(put(REST_URL + (DISH1_REST1_ID + 2))
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected)))
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        MATCHER.assertEquals(expected, service.get(REST1_ID));
+        MATCHER.assertEquals(updateFromTo(DISH3_REST1, expected), service.get(DISH1_REST1_ID + 2, REST1_ID));
     }
 
     @Test
     public void testUpdateInvalid() throws Exception {
-        Restaurant expected = getUpdated();
+        DishTo expected = getUpdatedTo();
         expected.setName(null);
-        ResultActions actions = mockMvc.perform(put(REST_URL + REST1_ID)
+        mockMvc.perform(put(REST_URL + (DISH1_REST1_ID + 2))
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected)))
@@ -143,13 +142,13 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    //@Ignore
+    @Ignore
     @Test
     @Transactional(propagation = Propagation.NEVER)
     public void testUpdateDuplicate() throws Exception {
-        Restaurant expected = REST2;
-        expected.setName("Прага");
-        ResultActions actions = mockMvc.perform(put(REST_URL + REST2_ID)
+        DishTo expected = getUpdatedTo();
+        expected.setName("Steak");
+        mockMvc.perform(put(REST_URL + DISH3_REST1)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(expected)))
@@ -159,20 +158,30 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + REST1_ID)
+        mockMvc.perform(delete(REST_URL + DISH1_REST1_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        MATCHER.assertCollectionEquals(Collections.singletonList(REST2), service.getAll());
+        MATCHER.assertCollectionEquals(Arrays.asList(DISH2_REST1, DISH3_REST1), service.getAll(REST1_ID, LocalDate.now()));
     }
 
     @Test
     public void testDeleteNotFound() throws Exception {
-        mockMvc.perform(delete(REST_URL + 1)
+        mockMvc.perform(delete(REST_URL + DISH1_REST2_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+        mockMvc.perform(get(REST_URL)
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHER.contentListMatcher(DISH2_REST1, DISH1_REST1, DISH3_REST1));
     }
 
 }

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public interface VoteService {
 
     //Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException;
-    Vote vote(int userId, int restaurantId) throws LateVoteException;
+    void vote(int userId, int restaurantId) throws LateVoteException;
 
     //Vote save(int userId, int restaurantId);
 
