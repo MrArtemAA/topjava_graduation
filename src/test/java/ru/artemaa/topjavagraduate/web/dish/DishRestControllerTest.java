@@ -2,14 +2,15 @@ package ru.artemaa.topjavagraduate.web.dish;
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import ru.artemaa.topjavagraduate.util.JsonUtil;
 import ru.artemaa.topjavagraduate.web.AbstractRestControllerTest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.artemaa.topjavagraduate.DishTestData.MATCHER;
-import static ru.artemaa.topjavagraduate.DishTestData.REST1_DISHES;
+import static ru.artemaa.topjavagraduate.DishTestData.*;
 import static ru.artemaa.topjavagraduate.RestaurantTestData.REST1_ID;
 import static ru.artemaa.topjavagraduate.TestUtil.userHttpBasic;
 import static ru.artemaa.topjavagraduate.UserTestData.USER;
@@ -36,6 +37,16 @@ public class DishRestControllerTest extends AbstractRestControllerTest {
         mockMvc.perform(get(REST_URL))
                 .andDo(print())
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void testPostNotAllowed() throws Exception {
+        mockMvc.perform(post(REST_URL)
+                .with(userHttpBasic(USER))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(getNewTo())))
+                .andDo(print())
+                .andExpect(status().isMethodNotAllowed());
     }
 
 }

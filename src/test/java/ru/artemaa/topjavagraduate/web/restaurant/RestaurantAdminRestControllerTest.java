@@ -1,5 +1,6 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -105,7 +106,7 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    //@Ignore
+    @Ignore
     @Test
     @Transactional(propagation = Propagation.NEVER)
     public void testCreateDuplicate() throws Exception {
@@ -143,7 +144,7 @@ public class RestaurantAdminRestControllerTest extends AbstractRestControllerTes
                 .andExpect(status().isUnprocessableEntity());
     }
 
-    //@Ignore
+    @Ignore
     @Test
     @Transactional(propagation = Propagation.NEVER)
     public void testUpdateDuplicate() throws Exception {

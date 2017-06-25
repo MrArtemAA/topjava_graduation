@@ -33,9 +33,4 @@ public class DishRestController {
         return service.getAll(restaurantId, LocalDate.now());
     }
 
-    /*@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Dish get(@PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
-        return service.get(id, restaurantId);
-    }*/
-
 }
