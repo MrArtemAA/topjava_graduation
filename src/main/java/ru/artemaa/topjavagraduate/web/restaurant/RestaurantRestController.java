@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.artemaa.topjavagraduate.AuthorizedUser;
 import ru.artemaa.topjavagraduate.model.Restaurant;
@@ -43,8 +44,8 @@ public class RestaurantRestController {
     }
 
     @PostMapping(value = "/{id}/vote")
-    public void vote(@PathVariable("id") int id) {
-        voteService.vote(AuthorizedUser.id(), id);
+    public void vote(@PathVariable("id") int id, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
+        voteService.vote(authorizedUser.getId(), id);
     }
 
     @ExceptionHandler(LateVoteException.class)

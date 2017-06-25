@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import ru.artemaa.topjavagraduate.util.ValidationUtil;
 import ru.artemaa.topjavagraduate.util.exception.ErrorInfo;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
@@ -41,13 +42,6 @@ public class GlobalControllerExceptionHandler {
         return logAndGetErrorInfo(req, e, false);
     }
 
-    /*@ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
-    @ExceptionHandler(BindException.class)
-    @ResponseBody
-    public ErrorInfo bindValidationError(HttpServletRequest req, BindingResult result) {
-        return logAndGetValidationErrorInfo(req, result);
-    }*/
-
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)  // 422
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
@@ -60,6 +54,11 @@ public class GlobalControllerExceptionHandler {
     @ResponseBody
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
         return logAndGetErrorInfo(req, e, true);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ErrorInfo> handleNoHandlerFoundException(HttpServletRequest req, NoHandlerFoundException e) {
+        return getErrorInfoResponseEntity(req, e, "Requested resource not found", HttpStatus.NOT_FOUND);
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

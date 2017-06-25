@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,10 +22,12 @@ public class Dish extends NamedEntity {
     @Column(name = "price", nullable = false)
     @NotNull
     @Range(min = 1, max = 2000)
+    @SafeHtml
     private Integer price;
 
     @Column(name = "date", nullable = false, columnDefinition = "date default today()")
     @NotNull
+    @SafeHtml
     private LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -54,6 +54,7 @@ public class ModelUtil {
     }
 
     public static User prepareToSave(User user) {
+        user.setPassword(PasswordUtil.encode(user.getPassword()));
         if (!StringUtils.isEmpty(user.getEmail())) {
             user.setEmail(user.getEmail().toLowerCase());
         }
