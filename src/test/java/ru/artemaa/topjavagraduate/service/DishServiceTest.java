@@ -60,8 +60,7 @@ public class DishServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        MATCHER.assertCollectionEquals(Arrays.asList(DISH2_REST1, DISH1_REST1, DISH3_REST1),
-                service.getAll(REST1_ID, LocalDate.now()));
+        MATCHER.assertCollectionEquals(REST1_DISHES, service.getAll(REST1_ID, LocalDate.now()));
     }
 
 }

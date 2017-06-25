@@ -181,7 +181,7 @@ public class DishAdminRestControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentListMatcher(DISH2_REST1, DISH1_REST1, DISH3_REST1));
+                .andExpect(MATCHER.contentListMatcher(REST1_DISHES));
     }
 
 }

@@ -8,7 +8,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.artemaa.topjavagraduate.DishTestData.*;
+import static ru.artemaa.topjavagraduate.DishTestData.MATCHER;
+import static ru.artemaa.topjavagraduate.DishTestData.REST1_DISHES;
 import static ru.artemaa.topjavagraduate.RestaurantTestData.REST1_ID;
 import static ru.artemaa.topjavagraduate.TestUtil.userHttpBasic;
 import static ru.artemaa.topjavagraduate.UserTestData.USER;
@@ -27,7 +28,7 @@ public class DishRestControllerTest extends AbstractRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER.contentListMatcher(DISH2_REST1, DISH1_REST1, DISH3_REST1));
+                .andExpect(MATCHER.contentListMatcher(REST1_DISHES));
     }
 
     @Test
