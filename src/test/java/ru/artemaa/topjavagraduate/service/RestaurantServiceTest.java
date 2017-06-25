@@ -1,13 +1,17 @@
 package ru.artemaa.topjavagraduate.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.artemaa.topjavagraduate.DishTestData;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 
+import static ru.artemaa.topjavagraduate.DishTestData.REST1_DISHES;
 import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
 
 /**
@@ -18,6 +22,11 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
     private RestaurantService service;
+
+    @Before
+    public void setUp() throws Exception {
+        service.evictCache();
+    }
 
     @Test
     public void testGet() throws Exception {
@@ -35,6 +44,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     public void testGetWithDishes() throws Exception {
         Restaurant restaurant = service.getWithDishes(REST1_ID, LocalDate.now());
         MATCHER.assertEquals(REST1, restaurant);
+        DishTestData.MATCHER.assertCollectionEquals(restaurant.getDishes(), REST1_DISHES);
     }
 
     @Test
@@ -55,7 +65,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void testDelete() throws Exception {
         service.delete(REST1_ID);
-        MATCHER.assertCollectionEquals(Arrays.asList(REST2), service.getAll());
+        MATCHER.assertCollectionEquals(Collections.singletonList(REST2), service.getAll());
     }
 
     @Test
@@ -71,7 +81,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetAllWithDishes() throws Exception {
-        service.getAllWithDishes(LocalDate.now());
+        MATCHER.assertCollectionEquals(RESTAURANTS, service.getAllWithDishes(LocalDate.now()));
     }
 
 }

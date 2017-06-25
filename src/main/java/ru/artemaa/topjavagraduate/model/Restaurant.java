@@ -1,5 +1,8 @@
 package ru.artemaa.topjavagraduate.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.BatchSize;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +16,8 @@ public class Restaurant extends NamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OrderBy("name ASC")
+    @BatchSize(size = 300)
+    @JsonManagedReference
     private List<Dish> dishes;
 
     public Restaurant() {

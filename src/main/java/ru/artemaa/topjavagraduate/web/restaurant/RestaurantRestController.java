@@ -2,9 +2,11 @@ package ru.artemaa.topjavagraduate.web.restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.artemaa.topjavagraduate.AuthorizedUser;
+import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.service.RestaurantService;
 import ru.artemaa.topjavagraduate.service.VoteService;
 import ru.artemaa.topjavagraduate.util.exception.ErrorInfo;
@@ -12,6 +14,8 @@ import ru.artemaa.topjavagraduate.util.exception.LateVoteException;
 import ru.artemaa.topjavagraduate.web.GlobalControllerExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Artem Areshko
@@ -47,4 +51,15 @@ public class RestaurantRestController extends AbstractRestaurantRestController {
         return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
+    @Override
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Restaurant> getAll() {
+        return super.getAll();
+    }
+
+    @Override
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Restaurant get(@PathVariable("id") int id) {
+        return service.getWithDishes(id, LocalDate.now());
+    }
 }

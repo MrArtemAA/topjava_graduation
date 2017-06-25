@@ -1,6 +1,8 @@
 package ru.artemaa.topjavagraduate.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.artemaa.topjavagraduate.dao.RestaurantDao;
@@ -37,18 +39,21 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @CacheEvict(value = "restaurantsWithDishes", allEntries = true)
     public Restaurant save(Restaurant restaurant) {
         Assert.notNull(restaurant, "restaurant can't be null");
         return dao.save(restaurant);
     }
 
     @Override
+    @CacheEvict(value = "restaurantsWithDishes", allEntries = true)
     public void update(Restaurant restaurant) throws NotFoundException {
         Assert.notNull(restaurant, "restaurant can't be null");
         checkNotFoundWithId(dao.save(restaurant), restaurant.getId());
     }
 
     @Override
+    @CacheEvict(value = "restaurantsWithDishes", allEntries = true)
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(dao.delete(id) != 0, id);
     }
@@ -59,7 +64,12 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Cacheable("restaurantsWithDishes")
     public List<Restaurant> getAllWithDishes(LocalDate date) {
         return dao.getAllWithDishes(date);
     }
+
+    @Override
+    @CacheEvict(value = "restaurantsWithDishes", allEntries = true)
+    public void evictCache() {}
 }

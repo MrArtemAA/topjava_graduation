@@ -26,4 +26,6 @@ public interface RestaurantService {
 
     List<Restaurant> getAllWithDishes(LocalDate date);
 
+    void evictCache();
+
 }
