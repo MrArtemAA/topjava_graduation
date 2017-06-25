@@ -23,16 +23,17 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_URL)
-public class RestaurantRestController extends AbstractRestaurantRestController {
+public class RestaurantRestController {
     static final String REST_URL = "/api/restaurants";
 
+    private final RestaurantService service;
     private final VoteService voteService;
 
     private GlobalControllerExceptionHandler exceptionInfoHandler;
 
     @Autowired
     public RestaurantRestController(RestaurantService service, VoteService voteService) {
-        super(service);
+        this.service = service;
         this.voteService = voteService;
     }
 
@@ -51,15 +52,22 @@ public class RestaurantRestController extends AbstractRestaurantRestController {
         return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAll() {
-        return super.getAll();
+    public List<Restaurant> getAll(@RequestParam(value = "withDishes", required = false, defaultValue = "true") boolean withDishes) {
+        if (withDishes) {
+            return service.getAllWithDishes(LocalDate.now());
+        } else {
+            return service.getAll();
+        }
     }
 
-    @Override
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Restaurant get(@PathVariable("id") int id) {
-        return service.getWithDishes(id, LocalDate.now());
+    public Restaurant get(@PathVariable("id") int id,
+                          @RequestParam(value = "withDishes", required = false, defaultValue = "true") boolean withDishes) {
+        if (withDishes) {
+            return service.getWithDishes(id, LocalDate.now());
+        } else {
+            return service.get(id);
+        }
     }
 }

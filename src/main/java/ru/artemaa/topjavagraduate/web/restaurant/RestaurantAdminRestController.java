@@ -15,6 +15,7 @@ import ru.artemaa.topjavagraduate.web.GlobalControllerExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
@@ -25,21 +26,32 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
  */
 @RestController
 @RequestMapping(RestaurantAdminRestController.REST_URL)
-public class RestaurantAdminRestController extends AbstractRestaurantRestController {
+public class RestaurantAdminRestController {
     static final String REST_URL = "/api/admin/restaurants";
 
     public static final String EXCEPTION_DUPLICATE_RESTAURANT = "Restaurant with this name already exists";
 
+    private final RestaurantService service;
     private GlobalControllerExceptionHandler exceptionInfoHandler;
 
     @Autowired
     public RestaurantAdminRestController(RestaurantService service) {
-        super(service);
+        this.service = service;
     }
 
     @Autowired
     public void setExceptionInfoHandler(GlobalControllerExceptionHandler exceptionInfoHandler) {
         this.exceptionInfoHandler = exceptionInfoHandler;
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Restaurant> getAll() {
+        return service.getAll();
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Restaurant get(@PathVariable("id") int id) {
+        return service.get(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
