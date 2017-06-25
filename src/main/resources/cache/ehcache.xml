@@ -27,6 +27,6 @@
            memoryStoreEvictionPolicy="LRU"/>
 
     <cache name="ru.artemaa.topjavagraduate.model.Restaurant"
-           maxElementsInMemory="25000"/>
+           maxElementsInMemory="1000"/>
 
 </ehcache>

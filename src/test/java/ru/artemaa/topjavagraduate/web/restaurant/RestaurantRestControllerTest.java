@@ -1,11 +1,14 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.artemaa.topjavagraduate.JpaUtil;
+import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.service.RestaurantService;
 import ru.artemaa.topjavagraduate.util.JsonUtil;
 import ru.artemaa.topjavagraduate.web.AbstractRestControllerTest;
@@ -31,6 +34,15 @@ public class RestaurantRestControllerTest extends AbstractRestControllerTest {
 
     @Autowired
     private RestaurantService service;
+
+    @Autowired
+    private JpaUtil jpaUtil;
+
+    @Before
+    public void setUp() {
+        service.evictCache();
+        jpaUtil.clear2ndLevelHibernateCache(Restaurant.class);
+    }
 
     @Test
     public void testGetAll() throws Exception {
@@ -106,6 +118,8 @@ public class RestaurantRestControllerTest extends AbstractRestControllerTest {
     @Test
     @Transactional(propagation = Propagation.NEVER)
     public void testVoteChange() throws Exception {
+        mockMvc.perform(post(REST_URL + REST1_ID + "/vote")
+                .with(userHttpBasic(USER)));
         ResultActions actions = mockMvc.perform(post(REST_URL + REST1_ID + "/vote")
                 .with(userHttpBasic(USER)))
                 .andDo(print());

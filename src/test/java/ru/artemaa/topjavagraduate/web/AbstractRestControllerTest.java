@@ -19,9 +19,8 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
  *         15.06.2017
  */
 @ContextConfiguration({
-        "classpath:spring/app.xml",
-        "classpath:spring/mvc.xml",
-        "classpath:spring/db.xml"
+        "classpath:spring/app-test.xml",
+        "classpath:spring/mvc.xml"
 })
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)

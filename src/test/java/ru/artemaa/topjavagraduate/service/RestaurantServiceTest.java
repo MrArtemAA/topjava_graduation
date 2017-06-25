@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.artemaa.topjavagraduate.DishTestData;
+import ru.artemaa.topjavagraduate.JpaUtil;
 import ru.artemaa.topjavagraduate.model.Restaurant;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
@@ -23,9 +24,13 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Autowired
     private RestaurantService service;
 
+    @Autowired
+    private JpaUtil jpaUtil;
+
     @Before
     public void setUp() throws Exception {
         service.evictCache();
+        jpaUtil.clear2ndLevelHibernateCache(Restaurant.class);
     }
 
     @Test

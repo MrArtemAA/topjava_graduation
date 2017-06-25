@@ -12,10 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author Artem Areshko
  * 03.05.2017
  */
-@ContextConfiguration({
-        "classpath:spring/app.xml",
-        "classpath:spring/db.xml"
-})
+@ContextConfiguration("classpath:spring/app-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public abstract class AbstractServiceTest {
