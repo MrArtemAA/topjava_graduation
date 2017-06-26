@@ -21,9 +21,9 @@
 ## Документация
 ### Описание API
 #### Сущности
-Пользователь (**User**): id, name, email, password, enabled, registered, roles; **UserTo**: id, name, email, password
-Ресторан (**Restaurant**): id, name; dishes
-Блюдо ресторана (**Dish**): id, name, date, price; **DishTo**: id, name, price
+* Пользователь (**User**): id, name, email, password, enabled, registered, roles; **UserTo**: id, name, email, password
+* Ресторан (**Restaurant**): id, name; dishes
+* Блюдо ресторана (**Dish**): id, name, date, price; **DishTo**: id, name, price
 
 **Формат описания запроса**: <Тип_запроса> <URI> [Параметры_запроса] [(Тело_запроса)] [: <Данные_ответа>]
 Для всех запросов, кроме регистрации необходима авторизация. Поддерживается базовая авторизация: email, password
