@@ -26,6 +26,7 @@
 * Блюдо ресторана (**Dish**): id, name, date, price; **DishTo**: id, name, price
 
 **Формат описания запроса**: <Тип_запроса> <URI> [Параметры_запроса] [(Тело_запроса)] [: <Данные_ответа>]
+
 Для всех запросов, кроме регистрации необходима авторизация. Поддерживается базовая авторизация: email, password
 
 ### Для пользователей
@@ -40,36 +41,36 @@
 
 ### Для администратора
 #### Работа с пользователями
-Список: Get /api/admin/users: список User
-Данные об одном: Get /api/admin/users/id: User
-Создать: Post /api/admin/users (UserTo): User
-Изменить: Put /api/admin/users/id (UserTo)
-Удалить: Delete /api/admin/users/id
+* Список: Get /api/admin/users: список User
+* Данные об одном: Get /api/admin/users/id: User
+* Создать: Post /api/admin/users (UserTo): User
+* Изменить: Put /api/admin/users/id (UserTo)
+* Удалить: Delete /api/admin/users/id
 
 #### Работа с ресторанами
-Список: Get /api/admin/restaurants: список Restaurant
-Данные об одном: Get /api/admin/restaurants/id: Restaurant
-Создать: Post /api/admin/restaurants (Restaurant): Restaurant
-Изменить: Put /api/admin/restaurants/id (Restaurant)
-Удалить: Delete /api/admin/restaurants/id
+* Список: Get /api/admin/restaurants: список Restaurant
+* Данные об одном: Get /api/admin/restaurants/id: Restaurant
+* Создать: Post /api/admin/restaurants (Restaurant): Restaurant
+* Изменить: Put /api/admin/restaurants/id (Restaurant)
+* Удалить: Delete /api/admin/restaurants/id
 
 #### Работа с меню ресторана
-Список: Get /api/admin/restaurants/restaurantId/dishes: список Dish
-Данные об одном блюде: Get /api/admin/restaurants/restaurantId/dishes/id: Dish
-Создать: Post /api/admin/restaurants/restaurantId/dishes (DishTo): Dish
-Изменить: Put /api/admin/restaurants/restaurantId/dishes/id (DishTo)
-Удалить: Delete /api/admin/restaurants/restaurantId/dishes/id
+* Список: Get /api/admin/restaurants/restaurantId/dishes: список Dish
+* Данные об одном блюде: Get /api/admin/restaurants/restaurantId/dishes/id: Dish
+* Создать: Post /api/admin/restaurants/restaurantId/dishes (DishTo): Dish
+* Изменить: Put /api/admin/restaurants/restaurantId/dishes/id (DishTo)
+* Удалить: Delete /api/admin/restaurants/restaurantId/dishes/id
 
 ### Примеры команд
 
 ## Используемые инструменты и технологии
-Maven
-Java 8
-Spring (Data JPA, MVC, Security, Test, Security test)
-Hibernate
-SLF4J, Logback
-HSQLDB
-JUnit
-Json (Jackson)
-EhCache
-jsoup
+* Maven
+* Java 8
+* Spring (Data JPA, MVC, Security, Test, Security test)
+* Hibernate
+* SLF4J, Logback
+* HSQLDB
+* JUnit
+* Json (Jackson)
+* EhCache
+* jsoup
