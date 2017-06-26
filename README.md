@@ -62,7 +62,47 @@
 * Изменить: Put /api/admin/restaurants/restaurantId/dishes/id (DishTo)
 * Удалить: Delete /api/admin/restaurants/restaurantId/dishes/id
 
-### Примеры команд
+### Примеры команд (для приложения, развернутого в контексте topjava_graduation)
+#### User registration
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### User profile
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### User update profile
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### User get restaurants
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### User vote
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin get users
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin get user
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin create user
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin update user
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin delete user
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin get restaurants
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin get restaurant
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin create restaurant
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin update restaurant
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin delete restaurant
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin get restuarant dishes
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin get dish
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin create dish
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin update dish
+`curl -s http://localhost:8080/topjava_graduation/api/`
+#### Admin delete dish
+`curl -s http://localhost:8080/topjava_graduation/api/`
 
 ## Используемые инструменты и технологии
 * Maven
