@@ -88,11 +88,11 @@
 #### Admin get restaurant
 `curl -s http://localhost:8080/topjava_graduation/api/admin/restaurants/100002 --user admin@world.org:admin`
 #### Admin create restaurant
-`curl -s -X POST -d '{"name" : "Friends and Family"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava_graduation/api/admin/restuarants --user admin@world.org:admin`
+`curl -s -X POST -d '{"name" : "Friends and Family"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava_graduation/api/admin/restaurants --user admin@world.org:admin`
 #### Admin update restaurant
 `curl -s -X PUT -d '{"id" : "100002", "name" : "Не прага"}' -H 'Content-Type:application/json' http://localhost:8080/topjava_graduation/api/admin/restaurants/100002 --user admin@world.org:admin`
 #### Admin delete restaurant
-`curl -s -X DELETE http://localhost:8080/topjava_graduation/api/ --user admin@world.org:admin`
+`curl -s -X DELETE http://localhost:8080/topjava_graduation/api/admin/restaurants/100002 --user admin@world.org:admin`
 #### Admin get restuarant dishes
 `curl -s http://localhost:8080/topjava_graduation/api/admin/restaurants/100002/dishes --user admin@world.org:admin`
 #### Admin get dish
