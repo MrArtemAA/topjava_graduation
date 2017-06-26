@@ -17,7 +17,7 @@ import static ru.artemaa.topjavagraduate.util.ModelUtil.updateFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 26.04.2017
  */
 @Service

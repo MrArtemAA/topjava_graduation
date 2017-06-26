@@ -13,7 +13,7 @@
         </encoder>
     </appender>
 
-    <logger name="ru.artemaa.topjavagraduate" level="debug"/>
+    <logger name="ru.artemaa.topjavagraduate" level="info"/>
 
     <root level="ERROR">
         <appender-ref ref="file"/>

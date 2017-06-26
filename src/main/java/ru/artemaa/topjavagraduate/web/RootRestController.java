@@ -1,5 +1,7 @@
 package ru.artemaa.topjavagraduate.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,8 @@ import static ru.artemaa.topjavagraduate.web.user.AbstractUserRestController.EXC
  */
 @RestController
 public class RootRestController {
+    private static final Logger LOG = LoggerFactory.getLogger(RootRestController.class);
+
     static final String REST_URL = "/api/register";
 
     private final UserService service;
@@ -46,6 +50,7 @@ public class RootRestController {
 
     @PostMapping(value = REST_URL)
     public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
+        LOG.info("Register {}", userTo);
         checkNew(userTo);
         User created = service.save(createFromTo(userTo));
 

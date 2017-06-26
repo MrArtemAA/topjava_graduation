@@ -1,5 +1,7 @@
 package ru.artemaa.topjavagraduate.web.dish;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -28,9 +30,11 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(value = DishAdminRestController.REST_URL)
 public class DishAdminRestController extends DishRestController {
+    private static final Logger LOG = LoggerFactory.getLogger(DishAdminRestController.class);
+
     static final String REST_URL = "/api/admin/restaurants/{restaurantId}/dishes";
 
-    public static final String EXCEPTION_DUPLICATE_DISH = "Dish at this restaurant with this name and date already exists";
+    private static final String EXCEPTION_DUPLICATE_DISH = "Dish at this restaurant with this name and date already exists";
 
     private GlobalControllerExceptionHandler exceptionInfoHandler;
 
@@ -44,18 +48,15 @@ public class DishAdminRestController extends DishRestController {
         this.exceptionInfoHandler = exceptionInfoHandler;
     }
 
-    /*@GetMapping(MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getAllForDate(@PathVariable("restaurantId") int restaurantId, ) {
-        return service.getAll(restaurantId, LocalDate.now());
-    }*/
-
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Dish get(@PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
+        LOG.info("Get today Dish {} for Restaurant {}", id, restaurantId);
         return service.get(id, restaurantId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> create(@Valid @RequestBody DishTo dishTo, @PathVariable("restaurantId") int restaurantId) {
+        LOG.info("Create {} for Restaurant {}", dishTo, restaurantId);
         checkNew(dishTo);
         Dish created = service.save(createFromTo(dishTo), restaurantId);
 
@@ -68,12 +69,14 @@ public class DishAdminRestController extends DishRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@Valid @RequestBody DishTo dishTo, @PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
+        LOG.info("Update {} with id {} for Restaurant {}", dishTo, id, restaurantId);
         checkIdConsistent(dishTo, id);
         service.update(dishTo, restaurantId);
     }
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
+        LOG.info("Delete Dish {} for Restaurant {}", id, restaurantId);
         service.delete(id, restaurantId);
     }
 

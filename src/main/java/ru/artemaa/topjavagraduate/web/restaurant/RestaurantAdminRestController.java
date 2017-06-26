@@ -1,5 +1,7 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,9 +29,11 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(RestaurantAdminRestController.REST_URL)
 public class RestaurantAdminRestController {
+    private static final Logger LOG = LoggerFactory.getLogger(RestaurantAdminRestController.class);
+
     static final String REST_URL = "/api/admin/restaurants";
 
-    public static final String EXCEPTION_DUPLICATE_RESTAURANT = "Restaurant with this name already exists";
+    private static final String EXCEPTION_DUPLICATE_RESTAURANT = "Restaurant with this name already exists";
 
     private final RestaurantService service;
     private GlobalControllerExceptionHandler exceptionInfoHandler;
@@ -46,16 +50,19 @@ public class RestaurantAdminRestController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll() {
+        LOG.info("Get all restaurants");
         return service.getAll();
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant get(@PathVariable("id") int id) {
+        LOG.info("Get Restaurant {}", id);
         return service.get(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant) {
+        LOG.info("Create {}", restaurant);
         checkNew(restaurant);
         Restaurant created = service.save(restaurant);
 
@@ -68,12 +75,14 @@ public class RestaurantAdminRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable("id") int id) {
+        LOG.info("Update {} with id = {}", restaurant, id);
         checkIdConsistent(restaurant, id);
         service.update(restaurant);
     }
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
+        LOG.info("Delete Restaurant {}", id);
         service.delete(id);
     }
 

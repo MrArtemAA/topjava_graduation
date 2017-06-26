@@ -1,5 +1,7 @@
 package ru.artemaa.topjavagraduate.web.restaurant;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +27,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_URL)
 public class RestaurantRestController {
+    private static final Logger LOG = LoggerFactory.getLogger(RestaurantRestController.class);
+
     static final String REST_URL = "/api/restaurants";
 
     private final RestaurantService service;
@@ -45,16 +49,13 @@ public class RestaurantRestController {
 
     @PostMapping(value = "/{id}/vote")
     public void vote(@PathVariable("id") int id, @AuthenticationPrincipal AuthorizedUser authorizedUser) {
+        LOG.info("Vote User {} for Restaurant {}", authorizedUser.getId(), id);
         voteService.vote(authorizedUser.getId(), id);
-    }
-
-    @ExceptionHandler(LateVoteException.class)
-    public ResponseEntity<ErrorInfo> lateVoteException(HttpServletRequest req, LateVoteException e) {
-        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAll(@RequestParam(value = "withDishes", required = false, defaultValue = "true") boolean withDishes) {
+        LOG.info("Get all restaurants withDishes = {}", withDishes);
         if (withDishes) {
             return service.getAllWithDishes(LocalDate.now());
         } else {
@@ -65,10 +66,17 @@ public class RestaurantRestController {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant get(@PathVariable("id") int id,
                           @RequestParam(value = "withDishes", required = false, defaultValue = "true") boolean withDishes) {
+        LOG.info("Get Restaurant {} withDishes = {}", id, withDishes);
         if (withDishes) {
             return service.getWithDishes(id, LocalDate.now());
         } else {
             return service.get(id);
         }
     }
+
+    @ExceptionHandler(LateVoteException.class)
+    public ResponseEntity<ErrorInfo> lateVoteException(HttpServletRequest req, LateVoteException e) {
+        return exceptionInfoHandler.getErrorInfoResponseEntity(req, e, e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
 }

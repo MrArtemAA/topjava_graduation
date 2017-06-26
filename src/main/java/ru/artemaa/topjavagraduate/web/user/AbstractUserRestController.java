@@ -39,40 +39,40 @@ public abstract class AbstractUserRestController {
     }
 
     public List<User> getAll() {
-        log.info("getAll");
+        log.info("Get all users");
         return service.getAll();
     }
 
     public User get(int id) {
-        log.info("get {}", id);
+        log.info("Get User {}", id);
         return service.get(id);
     }
 
     public User create(User user) {
-        log.info("create {}", user);
+        log.info("Create {}", user);
         checkNew(user);
         return service.save(user);
     }
 
     public void delete(int id) {
-        log.info("delete {}", id);
+        log.info("Delete User {}", id);
         service.delete(id);
     }
 
     public void update(User user, int id) {
-        log.info("update {} with id={}", user, id);
+        log.info("Update {} with id = {}", user, id);
         checkIdConsistent(user, id);
         service.update(user);
     }
 
     public void update(UserTo userTo, int id) {
-        log.info("update {} with id={}", userTo, id);
+        log.info("Update {} with id = {}", userTo, id);
         checkIdConsistent(userTo, id);
         service.update(userTo);
     }
 
     public User getByMail(String email) {
-        log.info("getByEmail {}", email);
+        log.info("Get User by email {}", email);
         return service.getByEmail(email);
     }
 

@@ -43,4 +43,13 @@ public class DishTo extends BaseTo implements Serializable {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "DishTo{" +
+                "id=" + getId() +
+                ", name=" + name +
+                ", price=" + price +
+                '}';
+    }
 }
