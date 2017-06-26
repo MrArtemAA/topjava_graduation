@@ -25,11 +25,12 @@
 * Ресторан (**Restaurant**): id, name; dishes
 * Блюдо ресторана (**Dish**): id, name, date, price; **DishTo**: id, name, price
 
-**Формат описания запроса**: <Тип_запроса> <URI> [Параметры_запроса] [(Тело_запроса)] [: <Данные_ответа>]
+#### Формат описания запроса
+<Тип_запроса> <URI> [Параметры_запроса] [(Тело_запроса)] [: <Данные_ответа>]
 
 Для всех запросов, кроме регистрации необходима авторизация. Поддерживается базовая авторизация: email, password
 
-### Для пользователей
+#### Для пользователей
 * Регистрация: Post /api/register (UserTo): User
 * Данные о пользователе: Get /api/profile : UserTo
 * Изменить данные: Put /api/profile (UserTo)
@@ -39,22 +40,22 @@
 * Все блюда ресторана: Get /api/restaurant/id/dishes: список Dish
 * Проголосовать: Post /api/restaurant/id/vote
 
-### Для администратора
-#### Работа с пользователями
+#### Для администратора
+##### Работа с пользователями
 * Список: Get /api/admin/users: список User
 * Данные об одном: Get /api/admin/users/id: User
 * Создать: Post /api/admin/users (UserTo): User
 * Изменить: Put /api/admin/users/id (UserTo)
 * Удалить: Delete /api/admin/users/id
 
-#### Работа с ресторанами
+##### Работа с ресторанами
 * Список: Get /api/admin/restaurants: список Restaurant
 * Данные об одном: Get /api/admin/restaurants/id: Restaurant
 * Создать: Post /api/admin/restaurants (Restaurant): Restaurant
 * Изменить: Put /api/admin/restaurants/id (Restaurant)
 * Удалить: Delete /api/admin/restaurants/id
 
-#### Работа с меню ресторана
+##### Работа с меню ресторана
 * Список: Get /api/admin/restaurants/restaurantId/dishes: список Dish
 * Данные об одном блюде: Get /api/admin/restaurants/restaurantId/dishes/id: Dish
 * Создать: Post /api/admin/restaurants/restaurantId/dishes (DishTo): Dish
