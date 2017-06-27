@@ -15,7 +15,7 @@ import java.util.List;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 26.04.2017
  */
 @Service
@@ -34,8 +34,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Restaurant getWithDishes(int id, LocalDate date) throws NotFoundException {
-        return checkNotFoundWithId(dao.getWithDishes(id, date), id);
+    public Restaurant getWithDishes(int id, LocalDate menuDate) throws NotFoundException {
+        return checkNotFoundWithId(dao.getWithDishes(id, menuDate), id);
     }
 
     @Override
@@ -65,8 +65,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     @Cacheable("restaurantsWithDishes")
-    public List<Restaurant> getAllWithDishes(LocalDate date) {
-        return dao.getAllWithDishes(date);
+    public List<Restaurant> getAllWithDishes(LocalDate menuDate) {
+        return dao.getAllWithDishes(menuDate);
     }
 
     @Override

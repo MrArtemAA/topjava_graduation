@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * @author MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @Repository
@@ -26,6 +26,6 @@ public interface VoteDao extends JpaRepository<Vote, Integer> {
 
     Vote findByUserIdAndDate(int userId, LocalDate date);
 
-    //Vote findByUserIdAndRestaurantIdAndDate(int userId, int restaurantId, LocalDate date);
+    Vote findByUserIdAndRestaurantIdAndDate(int userId, int restaurantId, LocalDate date);
 
 }

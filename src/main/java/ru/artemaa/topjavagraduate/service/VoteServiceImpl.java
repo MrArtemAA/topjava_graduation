@@ -13,11 +13,12 @@ import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 26.04.2017
  */
 @Service
@@ -35,36 +36,17 @@ public class VoteServiceImpl implements VoteService {
         this.restaurantDao = restaurantDao;
     }
 
-    /*@Override
-    public Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException {
-        return checkNotFound(dao.findByUserIdAndRestaurantIdAndDate(userId, restaurantId, date),
-                String.format("vote not found for userId = %s, restaurantId = %s, date = %s",
-                        userId,
-                        restaurantId,
-                        date.toString()));
-    }*/
-
-    /*@Override
-    public Vote get(int id, int userId) throws NotFoundException {
-
-        return checkNotFoundWithId(dao.get(id, userId), id);
-    }*/
-
-    //@Override
-    private Vote save(int userId, int restaurantId) {
+    private void save(int userId, int restaurantId) {
         Vote vote = new Vote();
         vote.setUser(userDao.getOne(userId));
         vote.setRestaurant(restaurantDao.getOne(restaurantId));
-        return dao.save(vote);
+        dao.save(vote);
     }
 
-    //@Override
-    private Vote update(Vote vote, int userId, int restaurantId) {
-        //Vote vote = getByUser(userId, LocalDate.now());
-        //vote.setTime(LocalTime.now());
+    private void update(Vote vote, int userId, int restaurantId) {
         vote.setUser(userDao.getOne(userId));
         vote.setRestaurant(restaurantDao.getOne(restaurantId));
-        return dao.save(vote);
+        dao.save(vote);
     }
 
     @Override
@@ -90,7 +72,7 @@ public class VoteServiceImpl implements VoteService {
                         date.toString()));
     }
 
-    /*@Override
+    @Override
     public List<Vote> getByUser(int userId) {
         return dao.findByUserId(userId);
     }
@@ -99,6 +81,6 @@ public class VoteServiceImpl implements VoteService {
     public List<Vote> getByRestaurant(int restaurantId, LocalDate date) {
         Assert.notNull(date, "date can't be null");
         return dao.findByRestaurantIdAndDate(restaurantId, date);
-    }*/
+    }
 
 }

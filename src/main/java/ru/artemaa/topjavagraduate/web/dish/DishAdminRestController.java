@@ -24,7 +24,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 19.06.2017
  */
 @RestController

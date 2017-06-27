@@ -12,6 +12,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * @author Artem Areshko
+ */
 @RestController
 @RequestMapping(UserAdminRestController.REST_URL)
 public class UserAdminRestController extends AbstractUserRestController {

@@ -9,7 +9,7 @@ import static java.util.Objects.requireNonNull;
 import static ru.artemaa.topjavagraduate.util.ModelUtil.asTo;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 19.06.2017
  */
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
@@ -43,10 +43,6 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     public static int id() {
         return get().userTo.getId();
-    }
-
-    public UserTo getUserTo() {
-        return userTo;
     }
 
     @Override

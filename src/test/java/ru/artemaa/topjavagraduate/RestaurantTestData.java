@@ -9,7 +9,7 @@ import java.util.List;
 import static ru.artemaa.topjavagraduate.model.BaseEntity.START_SEQ;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 03.05.2017
  */
 public class RestaurantTestData {

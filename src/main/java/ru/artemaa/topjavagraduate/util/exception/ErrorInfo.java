@@ -1,5 +1,8 @@
 package ru.artemaa.topjavagraduate.util.exception;
 
+/**
+ * @author Artem Areshko
+ */
 public class ErrorInfo {
     private final String url;
     private final String cause;

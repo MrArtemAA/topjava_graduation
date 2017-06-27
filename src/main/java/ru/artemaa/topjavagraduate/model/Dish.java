@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @Entity

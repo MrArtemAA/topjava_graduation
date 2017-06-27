@@ -8,7 +8,7 @@ import java.util.Arrays;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 03.05.2017
  */
 public class SpringMain {

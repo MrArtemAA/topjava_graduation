@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @Entity

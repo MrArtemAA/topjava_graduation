@@ -13,7 +13,7 @@ import java.util.List;
 import static ru.artemaa.topjavagraduate.util.ModelUtil.SORT_BY_NAME_EMAIL;
 
 /**
- * @author MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @Repository
@@ -36,11 +36,6 @@ public interface UserDao extends JpaRepository<User, Integer> {
         return findAll(SORT_BY_NAME_EMAIL);
     }
 
-    /**
-     *
-     * @param email
-     * @return null if not found
-     */
     User findByEmail(String email);
 
 }

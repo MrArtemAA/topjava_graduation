@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 19.06.2017
  */
 public class DishTo extends BaseTo implements Serializable {

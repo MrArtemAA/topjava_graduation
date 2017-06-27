@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @Repository
@@ -32,7 +32,5 @@ public interface DishDao extends JpaRepository<Dish, Integer> {
     int delete(@Param("id") int id, @Param("restaurantId") int restaurantId);
 
     List<Dish> findAllByRestaurantIdAndDateOrderByName(int restaurantId, LocalDate date);
-
-    List<Dish> findAllByRestaurantIdOrderByName(int restaurantId);
 
 }

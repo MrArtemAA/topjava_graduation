@@ -16,7 +16,7 @@ import static ru.artemaa.topjavagraduate.DishTestData.REST1_DISHES;
 import static ru.artemaa.topjavagraduate.RestaurantTestData.*;
 
 /**
- * @author MrArtemAA
+ * @author Artem Areshko
  * 03.05.2017
  */
 public class RestaurantServiceTest extends AbstractServiceTest {

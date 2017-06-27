@@ -25,7 +25,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 import static ru.artemaa.topjavagraduate.web.user.AbstractUserRestController.EXCEPTION_DUPLICATE_EMAIL;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 20.06.2017
  */
 @RestController

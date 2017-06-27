@@ -13,7 +13,7 @@ import static ru.artemaa.topjavagraduate.RestaurantTestData.REST2;
 import static ru.artemaa.topjavagraduate.model.BaseEntity.START_SEQ;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 08.06.2017
  */
 public class DishTestData {

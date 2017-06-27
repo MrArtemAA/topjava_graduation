@@ -21,7 +21,7 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 26.04.2017
  */
 @Service("userService")

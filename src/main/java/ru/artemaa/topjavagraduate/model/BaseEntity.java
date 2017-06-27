@@ -5,7 +5,7 @@ import ru.artemaa.topjavagraduate.HasId;
 import javax.persistence.*;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @MappedSuperclass

@@ -3,7 +3,7 @@ package ru.artemaa.topjavagraduate.util.exception;
 import java.time.LocalTime;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 21.06.2017
  */
 public class LateVoteException extends RuntimeException {

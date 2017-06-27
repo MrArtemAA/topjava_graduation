@@ -14,7 +14,7 @@ import java.util.List;
 import static ru.artemaa.topjavagraduate.util.ModelUtil.SORT_BY_NAME;
 
 /**
- * @author MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @Repository
@@ -38,9 +38,9 @@ public interface RestaurantDao extends JpaRepository<Restaurant, Integer> {
     }
 
     @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH r.dishes d WHERE r.id=:id AND d.date=:date")
-    Restaurant getWithDishes(@Param("id") int id, @Param("date") LocalDate date);
+    Restaurant getWithDishes(@Param("id") int id, @Param("date") LocalDate menuDate);
 
     @Query("SELECT DISTINCT r FROM Restaurant r LEFT JOIN FETCH r.dishes d WHERE d.date=:date ORDER BY r.name")
-    List<Restaurant> getAllWithDishes(@Param("date") LocalDate date);
+    List<Restaurant> getAllWithDishes(@Param("date") LocalDate menuDate);
 
 }

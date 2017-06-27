@@ -1,7 +1,8 @@
 package ru.artemaa.topjavagraduate.util.exception;
 
 /**
- * Created by Areshko-AA on 26.04.2017.
+ * @author Artem Areshko
+ * 26.04.2017
  */
 public class NotFoundException extends RuntimeException {
 

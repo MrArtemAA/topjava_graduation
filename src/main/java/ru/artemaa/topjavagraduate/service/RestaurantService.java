@@ -7,14 +7,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * @author MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 public interface RestaurantService {
 
     Restaurant get(int id) throws NotFoundException;
 
-    Restaurant getWithDishes(int id, LocalDate date) throws NotFoundException;
+    Restaurant getWithDishes(int id, LocalDate menuDate) throws NotFoundException;
 
     Restaurant save(Restaurant restaurant);
 
@@ -24,7 +24,7 @@ public interface RestaurantService {
 
     List<Restaurant> getAll();
 
-    List<Restaurant> getAllWithDishes(LocalDate date);
+    List<Restaurant> getAllWithDishes(LocalDate menuDate);
 
     void evictCache();
 

@@ -5,6 +5,7 @@ import ru.artemaa.topjavagraduate.util.exception.LateVoteException;
 import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Artem Areshko
@@ -12,17 +13,12 @@ import java.time.LocalDate;
  */
 public interface VoteService {
 
-    //Vote get(int userId, int restaurantId, LocalDate date) throws NotFoundException;
     void vote(int userId, int restaurantId) throws LateVoteException;
-
-    //Vote save(int userId, int restaurantId);
-
-    //Vote update(int userId, int restaurantId) throws NotFoundException;
 
     Vote getByUser(int userId, LocalDate date) throws NotFoundException;
 
-    //List<Vote> getByUser(int userId);
+    List<Vote> getByUser(int userId);
 
-    //List<Vote> getByRestaurant(int restaurantId, LocalDate date);
+    List<Vote> getByRestaurant(int restaurantId, LocalDate date);
 
 }

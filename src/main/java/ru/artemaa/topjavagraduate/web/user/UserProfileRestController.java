@@ -11,6 +11,9 @@ import ru.artemaa.topjavagraduate.to.UserTo;
 
 import javax.validation.Valid;
 
+/**
+ * @author Artem Areshko
+ */
 @RestController
 @RequestMapping(UserProfileRestController.REST_URL)
 public class UserProfileRestController extends AbstractUserRestController {

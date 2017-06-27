@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 24.04.2017
  */
 @Entity
@@ -19,10 +19,6 @@ public class Vote extends BaseEntity {
     @Column(name = "date", nullable = false, columnDefinition = "date default today()")
     @NotNull
     private LocalDate date = LocalDate.now();
-
-    /*@Column(name = "time", nullable = false, columnDefinition = "time default now()")
-    @NotNull
-    private LocalTime time = LocalTime.now();*/
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -61,14 +57,6 @@ public class Vote extends BaseEntity {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-    /*public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }*/
 
     public User getUser() {
         return user;

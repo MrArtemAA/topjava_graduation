@@ -10,7 +10,7 @@ import java.util.List;
 import static ru.artemaa.topjavagraduate.web.json.JacksonObjectMapper.getMapper;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 17.06.2017
  */
 public class JsonUtil {

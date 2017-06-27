@@ -9,7 +9,7 @@ import ru.artemaa.topjavagraduate.to.DishTo;
 import ru.artemaa.topjavagraduate.to.UserTo;
 
 /**
- * @author MrArtemAA
+ * @author Artem Areshko
  *         14.06.2017
  */
 public class ModelUtil {
@@ -33,10 +33,6 @@ public class ModelUtil {
     public static DishTo asTo(Dish dish) {
         return new DishTo(dish.getId(), dish.getName(), dish.getPrice());
     }
-
-    /*public static DishTo createFromEntity(Dish dish) {
-        return new DishTo(dish.getId(), dish.getName(), dish.getPrice());
-    }*/
 
     public static UserTo asTo(User user) {
         return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword());

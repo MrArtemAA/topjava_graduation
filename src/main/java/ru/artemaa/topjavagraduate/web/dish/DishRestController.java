@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * MrArtemAA
+ * @author Artem Areshko
  * 19.06.2017
  */
 @RestController

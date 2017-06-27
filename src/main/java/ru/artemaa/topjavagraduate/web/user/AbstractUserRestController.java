@@ -19,7 +19,9 @@ import java.util.List;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 
-
+/**
+ * @author Artem Areshko
+ */
 public abstract class AbstractUserRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

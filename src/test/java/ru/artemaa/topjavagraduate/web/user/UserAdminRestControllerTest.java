@@ -22,6 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.artemaa.topjavagraduate.TestUtil.userHttpBasic;
 import static ru.artemaa.topjavagraduate.UserTestData.*;
 
+/**
+ * @author Artem Areshko
+ */
 public class UserAdminRestControllerTest extends AbstractRestControllerTest {
 
     private static final String REST_URL = UserAdminRestController.REST_URL + '/';

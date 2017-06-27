@@ -2,6 +2,9 @@ package ru.artemaa.topjavagraduate.to;
 
 import ru.artemaa.topjavagraduate.HasId;
 
+/**
+ * @author Artem Areshko
+ */
 abstract public class BaseTo implements HasId {
     protected Integer id;
 
