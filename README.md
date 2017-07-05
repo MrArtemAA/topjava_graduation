@@ -36,6 +36,7 @@
 * Изменить данные: Put /api/profile (UserTo)
 * Удалить данные: Delete /api/profile
 * Список ресторанов: Get /api/restaurants ?withDishes (default=true) : список Restaurant
+    - Результат запроса кешируется на 12 часов
 * Данные о ресторане: Get /api/restaurants/id ?withDishes (default=true): Restaurant
 * Все блюда ресторана: Get /api/restaurant/id/dishes: список Dish
 * Проголосовать: Post /api/restaurant/id/vote
@@ -50,6 +51,7 @@
 
 ##### Работа с ресторанами
 * Список: Get /api/admin/restaurants: список Restaurant
+    - Результат запроса кешируется
 * Данные об одном: Get /api/admin/restaurants/id: Restaurant
 * Создать: Post /api/admin/restaurants (Restaurant): Restaurant
 * Изменить: Put /api/admin/restaurants/id (Restaurant)

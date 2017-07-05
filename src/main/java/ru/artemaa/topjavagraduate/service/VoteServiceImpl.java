@@ -9,13 +9,10 @@ import ru.artemaa.topjavagraduate.dao.UserDao;
 import ru.artemaa.topjavagraduate.dao.VoteDao;
 import ru.artemaa.topjavagraduate.model.Vote;
 import ru.artemaa.topjavagraduate.util.exception.LateVoteException;
-import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
-import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFound;
 
 /**
  * @author Artem Areshko
@@ -52,24 +49,21 @@ public class VoteServiceImpl implements VoteService {
     @Override
     @Transactional
     public void vote(int userId, int restaurantId) throws LateVoteException {
-        try {
-            Vote vote = getByUser(userId, LocalDate.now());
+        Vote vote = getByUser(userId, LocalDate.now());
+        if (vote == null) {
+            save(userId, restaurantId);
+        } else {
             if (LocalTime.now().isAfter(VOTE_DEADLINE)) {
                 throw new LateVoteException(VOTE_DEADLINE);
             }
             update(vote, userId, restaurantId);
-        } catch (NotFoundException nfe) {
-            save(userId, restaurantId);
         }
     }
 
     @Override
-    public Vote getByUser(int userId, LocalDate date) throws NotFoundException {
+    public Vote getByUser(int userId, LocalDate date) {
         Assert.notNull(date, "date can't be null");
-        return checkNotFound(dao.findByUserIdAndDate(userId, date),
-                String.format("userId = %s on date = %s",
-                        userId,
-                        date.toString()));
+        return dao.findByUserIdAndDate(userId, date);
     }
 
     @Override

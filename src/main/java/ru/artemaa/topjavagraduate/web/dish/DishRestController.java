@@ -25,7 +25,7 @@ public class DishRestController {
 
     static final String REST_URL = "/api/restaurants/{restaurantId}/dishes";
 
-    protected DishService service;
+    private DishService service;
 
     @Autowired
     public DishRestController(DishService service) {

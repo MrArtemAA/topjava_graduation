@@ -13,6 +13,7 @@ import ru.artemaa.topjavagraduate.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.artemaa.topjavagraduate.util.ModelUtil.createFromTo;
 import static ru.artemaa.topjavagraduate.util.ModelUtil.updateFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNotFoundWithId;
 
@@ -43,6 +44,11 @@ public class DishServiceImpl implements DishService {
         Assert.notNull(dish, "dish can't be null");
         dish.setRestaurant(restaurantDao.getOne(restaurantId));
         return dao.save(dish);
+    }
+
+    @Override
+    public Dish save(DishTo dishTo, int restaurantId) {
+        return save(createFromTo(dishTo), restaurantId);
     }
 
     @Override

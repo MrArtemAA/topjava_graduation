@@ -8,7 +8,13 @@ import javax.persistence.*;
  * @author Artem Areshko
  * 24.04.2017
  */
+
+/**
+ * Do not manipulate new (transient) entries in HashSet/HashMap without overriding hashCode
+ * http://stackoverflow.com/questions/5031614
+ */
 @MappedSuperclass
+// http://stackoverflow.com/questions/594597/hibernate-annotations-which-is-better-field-or-property-access
 @Access(AccessType.FIELD)
 public class BaseEntity implements HasId {
     public static final int START_SEQ = 100000;
@@ -16,6 +22,7 @@ public class BaseEntity implements HasId {
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    // PROPERTY access for id due to bug: https://hibernate.atlassian.net/browse/HHH-3718
     @Access(AccessType.PROPERTY)
     private Integer id;
 

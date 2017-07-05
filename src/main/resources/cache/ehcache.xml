@@ -15,7 +15,7 @@
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU"/>
 
-    <!-- cache restaurants with dishes (for users) fot 12 hours -->
+    <!-- cache restaurants with dishes (for users) for 12 hours -->
     <cache name="restaurantsWithDishes"
            timeToLiveSeconds="43200"
            maxElementsInMemory="2000"

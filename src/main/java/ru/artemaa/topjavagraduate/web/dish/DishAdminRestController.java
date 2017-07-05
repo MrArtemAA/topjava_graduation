@@ -18,8 +18,9 @@ import ru.artemaa.topjavagraduate.web.GlobalControllerExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
+import java.util.List;
 
-import static ru.artemaa.topjavagraduate.util.ModelUtil.createFromTo;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkIdConsistent;
 import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
 
@@ -29,18 +30,19 @@ import static ru.artemaa.topjavagraduate.util.ValidationUtil.checkNew;
  */
 @RestController
 @RequestMapping(value = DishAdminRestController.REST_URL)
-public class DishAdminRestController extends DishRestController {
+public class DishAdminRestController {
     private static final Logger LOG = LoggerFactory.getLogger(DishAdminRestController.class);
 
     static final String REST_URL = "/api/admin/restaurants/{restaurantId}/dishes";
 
     private static final String EXCEPTION_DUPLICATE_DISH = "Dish at this restaurant with this name and date already exists";
 
+    private DishService service;
     private GlobalControllerExceptionHandler exceptionInfoHandler;
 
     @Autowired
     public DishAdminRestController(DishService service) {
-        super(service);
+        this.service = service;
     }
 
     @Autowired
@@ -58,7 +60,7 @@ public class DishAdminRestController extends DishRestController {
     public ResponseEntity<Dish> create(@Valid @RequestBody DishTo dishTo, @PathVariable("restaurantId") int restaurantId) {
         LOG.info("Create {} for Restaurant {}", dishTo, restaurantId);
         checkNew(dishTo);
-        Dish created = service.save(createFromTo(dishTo), restaurantId);
+        Dish created = service.save(dishTo, restaurantId);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -78,6 +80,12 @@ public class DishAdminRestController extends DishRestController {
     public void delete(@PathVariable("id") int id, @PathVariable("restaurantId") int restaurantId) {
         LOG.info("Delete Dish {} for Restaurant {}", id, restaurantId);
         service.delete(id, restaurantId);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Dish> getAll(@PathVariable("restaurantId") int restaurantId) {
+        LOG.info("Get all today dishes for Restaurant {}", restaurantId);
+        return service.getAll(restaurantId, LocalDate.now());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
